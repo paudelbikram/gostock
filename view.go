@@ -11,6 +11,7 @@ import (
 	"text/template"
 )
 
+//go:embed data/template/template.html
 var templatesFS embed.FS
 
 func joinIntArray(arr []int64, sep string) string {
