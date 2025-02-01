@@ -75,7 +75,7 @@ func createView(ticker string) {
 		"joinFloatArray":  joinFloatArray,
 	}
 	stockTemplate := template.New("template.html").Funcs(funcMap)
-	stockTemplate, templateErr := stockTemplate.ParseFS(templatesFS, "./data/template/template.html")
+	stockTemplate, templateErr := stockTemplate.ParseFS(templatesFS, "data/template/template.html")
 	if templateErr != nil {
 		log.Println(templateErr)
 	}
