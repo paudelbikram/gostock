@@ -97,6 +97,7 @@ func createView(ticker string) {
 		"operatingMarginTrend":  operatingMarginTrend,
 		"debt2equityRatioTrend": debt2equityRatioTrend,
 	}
+	os.MkdirAll("./data/output", os.ModePerm)
 	outputfile, outputfileCreationErr := os.Create(fmt.Sprintf("./data/output/%s.html", ticker))
 	if outputfileCreationErr != nil {
 		log.Println(outputfileCreationErr)
