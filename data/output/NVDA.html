@@ -1,0 +1,1201 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NVDA</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container" id="overview">
+            <h3>NVDA Overview</h3>
+            <ul class="list-group overview">
+                <li class="list-group-item">Name : NVIDIA Corporation</li>
+                <li class="list-group-item">AssetType : Common Stock</li>
+                <li class="list-group-item">Description : Nvidia Corporation is an American multinational technology company incorporated in Delaware and based in Santa Clara, California. It designs graphics processing units (GPUs) for the gaming and professional markets, as well as system on a chip units (SoCs) for the mobile computing and automotive market.</li>
+            </ul>
+            <div class="row">
+                <div class="col">
+                    <ul class="list-group overview">
+                        <li class="list-group-item">Exchange : NASDAQ</li>
+                        <li class="list-group-item">Country : USA</li>
+                        <li class="list-group-item">Sector : MANUFACTURING</li>
+                        <li class="list-group-item">Industry : SEMICONDUCTORS & RELATED DEVICES</li>
+                        <li class="list-group-item">FiscalYearEnd : January</li>
+                        <li class="list-group-item">LatestQuarter : 2024-10-31</li>
+                        <li class="list-group-item">Currency : USD</li>
+                        <li class="list-group-item">MarketCapitalization : 2900105888000</li>
+                        <li class="list-group-item">PERatio : 46.62</li>
+                        <li class="list-group-item">PEGRatio : 1.022</li>
+                        <li class="list-group-item">ProfitMargin : 0.55</li>
+                        <li class="list-group-item">ReturnOnEquityTTM : 1.238</li>
+                        <li class="list-group-item">DividendYield : 2024-10-31</li>
+                        <li class="list-group-item">DividendPerShare : 2024-10-31</li>
+                        <li class="list-group-item">OperatingMarginTTM : 2024-10-31</li>
+                        <li class="list-group-item">ReturnOnAssetsTTM : 2024-10-31</li>
+                        <li class="list-group-item">EBITDA : 61184000000</li>
+                        <li class="list-group-item">BookValue : 1.744</li>
+                        <li class="list-group-item">revenuePerShare : <no value></li>
+                        <li class="list-group-item">50DayMovingAverage : 139.54</li>
+                        <li class="list-group-item">200DayMovingAverage : 121.6</li>
+                        <li class="list-group-item">SharesOutstanding : 24490000000</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <ul class="list-group overview">
+                        <li class="list-group-item">quarterlyEarningsGrowthYOY : 1.68</li>
+                        <li class="list-group-item">QuarterlyRevenueGrowthYOY : 1.224</li>
+                        <li class="list-group-item">Beta : 1.657</li>
+                        <li class="list-group-item">PriceToSalesRatioTTM : 30.11</li>
+                        <li class="list-group-item">AnalystTargetPrice : 173.08</li>
+                        <li class="list-group-item">AnalystRatingStrongBuy : 12</li>
+                        <li class="list-group-item">AnalystRatingBuy : 48</li>
+                        <li class="list-group-item">AnalystRatingHold : 4</li>
+                        <li class="list-group-item">AnalystRatingSell : 0</li>
+                        <li class="list-group-item">AnalystRatingStrongSell : 0</li>
+                        <li class="list-group-item">EVToEBITDA : 46.27</li>
+                        <li class="list-group-item">EPS : 2.54</li>
+                        <li class="list-group-item">RevenueTTM : 96307003000</li>
+                        <li class="list-group-item">GrossProfitTTM : 73170002000</li>
+                        <li class="list-group-item">DilutedEPSTTM : 2.54</li>
+                        <li class="list-group-item">TrailingPE : 46.62</li>
+                        <li class="list-group-item">ForwardPE : 33.33</li>
+                        <li class="list-group-item">PriceToBookRatio : 53.0</li>
+                        <li class="list-group-item">EVToRevenue : 30.59</li>
+                        <li class="list-group-item">52WeekHigh : 153.13</li>
+                        <li class="list-group-item">52WeekLow : 60.69</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="container">
+            <h6>NVDA Yearly Revenue Chart</h6>
+            <canvas id="stock-chart-revenue-yearly"></canvas>
+        </div>
+        <hr />
+        <div class="container">
+            <h6>NVDA Quarterly Revenue Chart</h6>
+            <canvas id="stock-chart-revenue-quarterly"></canvas>
+        </div>
+        <hr />
+        <div class="container">
+            <h6>NVDA Yearly Cashflow Chart</h6>
+            <canvas id="stock-chart-cashflow-yearly"></canvas>
+        </div>
+        <hr />
+        <div class="container">
+            <h6>NVDA Quarterly Cashflow Chart</h6>
+            <canvas id="stock-chart-cashflow-quarterly"></canvas>
+        </div>
+        <hr />
+        <div class="container">
+            <h6>NVDA Yearly Profit Margin Chart</h6>
+            <canvas id="stock-chart-profitmargin-yearly"></canvas>
+        </div>
+        <hr />
+        <div class="container">
+            <h6>NVDA Quarterly Profit Margin Chart</h6>
+            <canvas id="stock-chart-profitmargin-quarterly"></canvas>
+        </div>
+        <hr />
+        <div class="container">
+            <h6>NVDA Yearly Operating Margin Chart</h6>
+            <canvas id="stock-chart-operatingmargin-yearly"></canvas>
+        </div>
+        <hr />
+        <div class="container">
+            <h6>NVDA Quarterly Operating Margin Chart</h6>
+            <canvas id="stock-chart-operatingmargin-quarterly"></canvas>
+        </div>
+        <hr />
+        <div class="container">
+            <h6>NVDA Yearly Debt to Equity Ratio Chart</h6>
+            <canvas id="stock-chart-debt2equity-yearly"></canvas>
+        </div>
+        <hr />
+        <div class="container">
+            <h6>NVDA Quarterly Debt to Equity Ratio Chart</h6>
+            <canvas id="stock-chart-debt2equity-quarterly"></canvas>
+        </div>
+        <hr />
+        <div id="calculate">
+            <h3>Calculating Stock Price</h3>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Year</th>
+                        <th scope="col">Free Cash Flow</th>
+                        <th scope="col">Free Cash Flow Growth Rate</th>
+                        <th scope="col">Present Value of FCF</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <#list fcfsByYear?keys as key>
+                        <tr>
+                            <th scope="row">${key}</th>
+                            <#list fcfsByYear[key] as value>
+                                <td>${value}</td>
+                            </#list>
+                        </tr>
+                    </#list>
+                    </tbody>
+                </table>
+                <p>Sum of FCFs : ${sumOfFcf}</p>
+                <p>Discount Rate : ${discountRate}</p>
+                <p>Terminal Rate : ${terminalRate}</p>
+                <p>Sum of FCFs / Number of Shares Outstanding : ${sumOfFcf} / ${numOfSharesOutstanding}
+                = ${stockPrice}
+                </p>
+                <p>Analyst Target Price : 173.08</p>
+        </div>
+        <div id="balance-sheet">
+            <h3>Yearly Balance Sheet</h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Fiscal Date Ending</th>
+                    <th scope="col">Total Assets</th>
+                    <th scope="col">Cash/Cash Equivalents At Carrying Value</th>
+                    <th scope="col">Total Liabilities</th>
+                    <th scope="col">Total Shareholder Equity</th>
+                    <th scope="col">Inventory</th>
+                    <th scope="col">Deferred Revenue</th>
+                    <th scope="col">Total Current Liabilities</th>
+                    <th scope="col">Long Term Debt</th>
+                    <th scope="col">Retained Earnings</th>
+                    <th scope="col">Common Stock Shares Outstanding</th>
+                    <th scope="col">Debt To Equity Ratio</th>
+                </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <th scope="row">2024-01-28</th>
+                        <td>65728000000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2023-01-29</th>
+                        <td>41182000000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2022-01-30</th>
+                        <td>44187000000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2021-01-31</th>
+                        <td>28791000000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2020-01-26</th>
+                        <td>17315000000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2019-01-27</th>
+                        <td>13292000000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2018-01-28</th>
+                        <td>11241000000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2017-01-29</th>
+                        <td>9841000000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2016-01-31</th>
+                        <td>7370000000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2015-01-25</th>
+                        <td>7201000000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2014-01-26</th>
+                        <td>7250894000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2013-01-27</th>
+                        <td>6412245000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2012-01-29</th>
+                        <td>5552928000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2011-01-30</th>
+                        <td>4495246000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2010-01-31</th>
+                        <td>3585918000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th scope="row">2009-01-25</th>
+                        <td>3350727000</td>
+                        <td>${annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${annualBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=annualBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        <hr />
+        <div id="balance-sheet">
+            <h3>Quarterly Balance Sheet</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Fiscal Date Ending</th>
+                        <th scope="col">Total Assets</th>
+                        <th scope="col">Cash/Cash Equivalents At Carrying Value</th>
+                        <th scope="col">Total Liabilities</th>
+                        <th scope="col">Total Shareholder Equity</th>
+                        <th scope="col">Inventory</th>
+                        <th scope="col">Deferred Revenue</th>
+                        <th scope="col">Total Current Liabilities</th>
+                        <th scope="col">Long Term Debt</th>
+                        <th scope="col">Retained Earnings</th>
+                        <th scope="col">Common Stock Shares Outstanding</th>
+                        <th scope="col">Debt To Equity Ratio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <#list quarterlyBalanceSheets as quarterlyBalanceSheet>
+                    <tr>
+                        <th scope="row">${quarterlyBalanceSheet.getFiscalDateEnding()}</th>
+                        <td>${quarterlyBalanceSheet.getTotalAssets()} <br/>
+                        <@macros.change changeValue=quarterlyBalanceSheet.getTotalAssetsChange()/>
+                        </td>
+                        <td>${quarterlyBalanceSheet.getCashAndCashEquivalentsAtCarryingValue()} <br/>
+                        <@macros.change changeValue=quarterlyBalanceSheet.getCashAndCashEquivalentsAtCarryingValueChange()/>
+                        </td>
+                        <td>${quarterlyBalanceSheet.getTotalLiabilities()} <br/>
+                        <@macros.change changeValue=quarterlyBalanceSheet.getTotalLiabilitiesChange()/>
+                        </td>
+                        <td>${quarterlyBalanceSheet.getTotalShareholderEquity()} <br/>
+                        <@macros.change changeValue=quarterlyBalanceSheet.getTotalShareholderEquityChange()/>
+                        </td>
+                        <td>${quarterlyBalanceSheet.getInventory()} <br/>
+                        <@macros.change changeValue=quarterlyBalanceSheet.getInventoryChange()/>
+                        </td>
+                        <td>${quarterlyBalanceSheet.getDeferredRevenue()} <br/>
+                        <@macros.change changeValue=quarterlyBalanceSheet.getDeferredRevenueChange()/>
+                        </td>
+                        <td>${quarterlyBalanceSheet.getTotalCurrentLiabilities()} <br/>
+                        <@macros.change changeValue=quarterlyBalanceSheet.getTotalCurrentLiabilitiesChange()/>
+                        </td>
+                        <td>${quarterlyBalanceSheet.getLongTermDebt()} <br/>
+                        <@macros.change changeValue=quarterlyBalanceSheet.getLongTermDebtChange()/>
+                        </td>
+                        <td>${quarterlyBalanceSheet.getRetainedEarnings()} <br/>
+                        <@macros.change changeValue=quarterlyBalanceSheet.getRetainedEarningsChange()/>
+                        </td>
+                        <td>${quarterlyBalanceSheet.getCommonStockSharesOutstanding()} <br/>
+                        <@macros.change changeValue=quarterlyBalanceSheet.getCommonStockSharesOutstandingChange()/>
+                        </td>
+                        <td>${quarterlyBalanceSheet.getDebtToEquityRatio()!'NA'} <br/>
+                        <@macros.change changeValue=quarterlyBalanceSheet.getDebtToEquityRatioChange()/>
+                        </td>
+                    </tr>
+                </#list>
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+        <div id="cash-flow">
+            <h3>Yearly Cash Flow</h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Fiscal Date Ending</th>
+                    <th scope="col">Operating CashFlow</th>
+                    <th scope="col">Capital Expenditures</th>
+                    <th scope="col">Free CashFlow</th>
+                    <th scope="col">Dividend Payout</th>
+                    <th scope="col">CashFlow From Financing</th>
+                    <th scope="col">CashFlow From Investment</th>
+                    <th scope="col">Net Income</th>
+                </tr>
+                </thead>
+                <tbody>
+                <#list annualCashFlows as cashFlow>
+                        <tr>
+                            <th scope="row">${cashFlow.getFiscalDateEnding()}</th>
+                            <td>${cashFlow.getOperatingCashFlow()} <br/>
+                            <@macros.change changeValue=cashFlow.getOperatingCashFlowChange()/>
+                            </td>
+                            <td>${cashFlow.getCapitalExpenditures()} <br/>
+                            <@macros.change changeValue=cashFlow.getCapitalExpendituresChange()/>
+                            </td>
+                            <td>${cashFlow.getFreeCashFlow()} <br/>
+                            <@macros.change changeValue=cashFlow.getFreeCashFlowChange()/>
+                            </td>
+                            <td>${cashFlow.getDividendPayout()} <br/>
+                            <@macros.change changeValue=cashFlow.getDividendPayoutChange()/>
+                            </td>
+                            <td>${cashFlow.getCashFlowFromFinancing()} <br/>
+                            <@macros.change changeValue=cashFlow.getCashFlowFromFinancingChange()/>
+                            </td>
+                            <td>${cashFlow.getCashFlowFromInvestment()} <br/>
+                            <@macros.change changeValue=cashFlow.getCashFlowFromInvestmentChange()/>
+                            </td>
+                            <td>${cashFlow.getNetIncome()} <br/>
+                            <@macros.change changeValue=cashFlow.getNetIncomeChange()/>
+                            </td>
+                        </tr>
+                </#list>
+                </tbody>
+            </table>
+        </div>
+        <hr />
+        <div id="cash-flow">
+            <h3>Quarterly Cash Flow</h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Fiscal Date Ending</th>
+                    <th scope="col">Operating CashFlow</th>
+                    <th scope="col">Capital Expenditures</th>
+                    <th scope="col">Free CashFlow</th>
+                    <th scope="col">Dividend Payout</th>
+                    <th scope="col">CashFlow From Financing</th>
+                    <th scope="col">CashFlow From Investment</th>
+                    <th scope="col">Net Income</th>
+                </tr>
+                </thead>
+                <tbody>
+                <#list quarterlyCashFlows as cashFlow>
+                        <tr>
+                            <th scope="row">${cashFlow.getFiscalDateEnding()}</th>
+                            <td>${cashFlow.getOperatingCashFlow()} <br/>
+                            <@macros.change changeValue=cashFlow.getOperatingCashFlowChange()/>
+                            </td>
+                            <td>${cashFlow.getCapitalExpenditures()} <br/>
+                            <@macros.change changeValue=cashFlow.getCapitalExpendituresChange()/>
+                            </td>
+                            <td>${cashFlow.getFreeCashFlow()} <br/>
+                            <@macros.change changeValue=cashFlow.getFreeCashFlowChange()/>
+                            </td>
+                            <td>${cashFlow.getDividendPayout()} <br/>
+                            <@macros.change changeValue=cashFlow.getDividendPayoutChange()/>
+                            </td>
+                            <td>${cashFlow.getCashFlowFromFinancing()} <br/>
+                            <@macros.change changeValue=cashFlow.getCashFlowFromFinancingChange()/>
+                            </td>
+                            <td>${cashFlow.getCashFlowFromInvestment()} <br/>
+                            <@macros.change changeValue=cashFlow.getCashFlowFromInvestmentChange()/>
+                            </td>
+                            <td>${cashFlow.getNetIncome()} <br/>
+                            <@macros.change changeValue=cashFlow.getNetIncomeChange()/>
+                            </td>
+                        </tr>
+                </#list>
+                </tbody>
+            </table>
+        </div>
+        <hr />
+        <div id="annual-income-statement">
+            <h3>Yearly Income Statement</h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Fiscal Date Ending</th>
+                    <th scope="col">Total Revenue</th>
+                    <th scope="col">Gross Profit</th>
+                    <th scope="col">Operating Income</th>
+                    <th scope="col">Net Income</th>
+                    <th scope="col">EBITDA</th>
+                    <th scope="col">Operating Expenses</th>
+                    <th scope="col">Income Before Tax</th>
+                    <th scope="col">Profit Margin</th>
+                    <th scope="col">Operating Margin</th>
+                    <th scope="col">EPS</th>
+                </tr>
+                </thead>
+                <tbody>
+                <#list annualIncomeAndEarnings as annualIncomeAndEarning>
+                    <tr>
+                        <th scope="row">${annualIncomeAndEarning.getFiscalDateEnding()}</th>
+                        <td>${annualIncomeAndEarning.getTotalRevenue()} <br/>
+                        <@macros.change changeValue=annualIncomeAndEarning.getTotalRevenueChange()/>
+                        </td>
+                        <td>${annualIncomeAndEarning.getGrossProfit()} <br/>
+                        <@macros.change changeValue=annualIncomeAndEarning.getGrossProfitChange()/>
+                        </td>
+                        <td>${annualIncomeAndEarning.getOperatingIncome()} <br/>
+                        <@macros.change changeValue=annualIncomeAndEarning.getOperatingIncomeChange()/>
+                        </td>
+                        <td>${annualIncomeAndEarning.getNetIncome()} <br/>
+                        <@macros.change changeValue=annualIncomeAndEarning.getNetIncomeChange()/>
+                        </td>
+                        <td>${annualIncomeAndEarning.getEbitda()} <br/>
+                        <@macros.change changeValue=annualIncomeAndEarning.getEbitdaChange()/>
+                        </td>
+                        <td>${annualIncomeAndEarning.getOperatingExpenses()} <br/>
+                        <@macros.change changeValue=annualIncomeAndEarning.getOperatingExpensesChange()/>
+                        </td>
+                        <td>${annualIncomeAndEarning.getIncomeBeforeTax()} <br/>
+                        <@macros.change changeValue=annualIncomeAndEarning.getIncomeBeforeTaxChange()/>
+                        </td>
+                        <td>${annualIncomeAndEarning.getProfitMargin()} <br/>
+                        <@macros.change changeValue=annualIncomeAndEarning.getProfitMarginChange()/>
+                        </td>
+                        <td>${annualIncomeAndEarning.getOperatingMargin()} <br/>
+                        <@macros.change changeValue=annualIncomeAndEarning.getOperatingMarginChange()/>
+                        </td>
+                        <td>${annualIncomeAndEarning.getReportedEPS()!'NA'} <br/>
+                        <@macros.change changeValue=annualIncomeAndEarning.getReportedEPSChange()/>
+                        </td>
+                    </tr>
+                </#list>
+                </tbody>
+            </table>
+            </div>
+            <div id="quarterly-income-statement">
+            <h3>Quarterly Income Statement</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Fiscal Date Ending</th>
+                            <th scope="col">Total Revenue</th>
+                            <th scope="col">Gross Profit</th>
+                            <th scope="col">Operating Income</th>
+                            <th scope="col">Net Income</th>
+                            <th scope="col">EBITDA</th>
+                            <th scope="col">Operating Expenses</th>
+                            <th scope="col">Income Before Tax</th>
+                            <th scope="col">Profit Margin</th>
+                            <th scope="col">Operating Margin</th>
+                            <th scope="col">EPS</th>
+                        </tr>
+                        </thead>
+                    <tbody>
+                    <#list quarterlyIncomeAndEarnings as quarterlyIncomeAndEarning>
+                        <tr>
+                            <th scope="row">${quarterlyIncomeAndEarning.getFiscalDateEnding()}</th>
+                            <td>${quarterlyIncomeAndEarning.getTotalRevenue()} <br/>
+                            <@macros.change changeValue=quarterlyIncomeAndEarning.getTotalRevenueChange()/>
+                            </td>
+                            <td>${quarterlyIncomeAndEarning.getGrossProfit()} <br/>
+                            <@macros.change changeValue=quarterlyIncomeAndEarning.getGrossProfitChange()/>
+                            </td>
+                            <td>${quarterlyIncomeAndEarning.getOperatingIncome()} <br/>
+                            <@macros.change changeValue=quarterlyIncomeAndEarning.getOperatingIncomeChange()/>
+                            </td>
+                            <td>${quarterlyIncomeAndEarning.getNetIncome()} <br/>
+                            <@macros.change changeValue=quarterlyIncomeAndEarning.getNetIncomeChange()/>
+                            </td>
+                            <td>${quarterlyIncomeAndEarning.getEbitda()} <br/>
+                            <@macros.change changeValue=quarterlyIncomeAndEarning.getEbitdaChange()/>
+                            </td>
+                            <td>${quarterlyIncomeAndEarning.getOperatingExpenses()} <br/>
+                            <@macros.change changeValue=quarterlyIncomeAndEarning.getOperatingExpensesChange()/>
+                            </td>
+                            <td>${quarterlyIncomeAndEarning.getIncomeBeforeTax()} <br/>
+                            <@macros.change changeValue=quarterlyIncomeAndEarning.getIncomeBeforeTaxChange()/>
+                            </td>
+                            <td>${quarterlyIncomeAndEarning.getProfitMargin()} <br/>
+                            <@macros.change changeValue=quarterlyIncomeAndEarning.getProfitMarginChange()/>
+                            </td>
+                            <td>${quarterlyIncomeAndEarning.getOperatingMargin()} <br/>
+                            <@macros.change changeValue=quarterlyIncomeAndEarning.getOperatingMarginChange()/>
+                            </td>
+                            <td>${quarterlyIncomeAndEarning.getReportedEPS()!'NA'} <br/>
+                            <@macros.change changeValue=quarterlyIncomeAndEarning.getReportedEPSChange()/>
+                            </td>
+                        </tr>
+                    </#list>
+                    </tbody>
+                </table>
+            </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+          // Revenue
+          const ctxYearlyRevenue = document.getElementById('stock-chart-revenue-yearly').getContext('2d');
+          const ctxQuarterlyRevenue = document.getElementById('stock-chart-revenue-quarterly').getContext('2d');
+          const yearlyRevenueData = [3543309000, 3997930000, 4280159000, 4130000000, 4682000000, 5010000000, 6910000000, 9714000000, 11658000000, 10918000000, 16675000000, 26914000000, 26974000000, 60922000000];
+          const quarterlyRevenueData = [892676000, 897655000, 481140000, 664231000, 776520000, 903206000, 982488000, 1001813000, 811208000, 843912000, 886376000, 962039000, 1016517000, 1066180000, 953194000, 924877000, 1044270000, 1204110000, 1106902000, 954739000, 977238000, 1053967000, 1144218000, 1103000000, 1103000000, 1225000000, 1251000000, 1151000000, 1153000000, 1305000000, 1401000000, 1305000000, 1428000000, 2004000000, 2173000000, 1937000000, 2230000000, 2636000000, 2911000000, 3207000000, 3123000000, 3181000000, 2205000000, 2220000000, 2579000000, 3014000000, 3105000000, 3080000000, 3866000000, 4726000000, 5003000000, 5661000000, 6507000000, 7103000000, 7643000000, 8288000000, 6704000000, 5931000000, 6051000000, 7192000000, 13507000000, 18120000000, 22103000000, 26044000000, 30040000000, 35082000000];
+          const yearlyDates = ['2011-01-30', '2012-01-29', '2013-01-27', '2014-01-26', '2015-01-25', '2016-01-31', '2017-01-29', '2018-01-28', '2019-01-27', '2020-01-26', '2021-01-31', '2022-01-30', '2023-01-29', '2024-01-28'];
+          const quarterlyDates = ['2008-07-27', '2008-10-26', '2009-01-25', '2009-04-26', '2009-07-26', '2009-10-25', '2010-01-31', '2010-05-02', '2010-08-01', '2010-10-31', '2011-01-30', '2011-05-01', '2011-07-31', '2011-10-30', '2012-01-29', '2012-04-29', '2012-07-29', '2012-10-28', '2013-01-27', '2013-04-28', '2013-07-28', '2013-10-27', '2014-01-26', '2014-04-27', '2014-07-27', '2014-10-26', '2015-01-25', '2015-04-26', '2015-07-26', '2015-10-25', '2016-01-31', '2016-05-01', '2016-07-31', '2016-10-30', '2017-01-29', '2017-04-30', '2017-07-30', '2017-10-29', '2018-01-28', '2018-04-29', '2018-07-29', '2018-10-28', '2019-01-27', '2019-04-28', '2019-07-28', '2019-10-27', '2020-01-26', '2020-04-26', '2020-07-26', '2020-10-25', '2021-01-31', '2021-05-02', '2021-08-01', '2021-10-31', '2022-01-30', '2022-05-01', '2022-07-31', '2022-10-30', '2023-01-29', '2023-04-30', '2023-07-30', '2023-10-29', '2024-01-28', '2024-04-28', '2024-07-28', '2024-10-27'];
+
+          new Chart(ctxYearlyRevenue, {
+            type: 'line',
+            data: {
+              labels: yearlyDates,
+              datasets: [
+                {
+                    label: 'Revenue',
+                    data: yearlyRevenueData,
+                    borderColor: 'green',
+                    borderWidth: 2,
+                }
+              ],
+            },
+          });
+
+          new Chart(ctxQuarterlyRevenue, {
+            type: 'line',
+            data: {
+              labels: quarterlyDates,
+              datasets: [
+                {
+                    label: 'Revenue',
+                    data: quarterlyRevenueData,
+                    borderColor: 'green',
+                    borderWidth: 2,
+                }
+              ],
+            },
+          });
+
+          //cashflow 
+          const ctxYearlyCashflow = document.getElementById('stock-chart-cashflow-yearly').getContext('2d');
+          const ctxQuarterlyCashflow = document.getElementById('stock-chart-cashflow-quarterly').getContext('2d');
+          const yearlyCashflowData = [577907000, 770421000, 640863000, 579814000, 783619000, 1089000000, 1496000000, 2909000000, 3143000000, 4272000000, 4694000000, 8132000000, 3808000000, 27021000000];
+          const quarterlyCashflowData = [124724000, 46670000, -22477000, -3300000, 190354000, 413330000, 141005000, 58698000, 205382000, 365336000, -38131000, 138942000, 136801000, 403251000, 109983000, 11483000, 124156000, 334192000, 121932000, 73473000, 176259000, 411955000, 216000000, 139000000, 238000000, 496000000, 264000000, 169000000, 394000000, 670000000, 228000000, 651000000, 1088000000, 942000000, 1327000000, 784000000, 337000000, 695000000, 592000000, 823000000, 1537000000, 1321000000, 754000000, 1350000000, 806000000, 1784000000, 1576000000, 2499000000, 1297000000, 2760000000, 1370000000, 837000000, -138000000, 1739000000, 2663000000, 6059000000, 7054000000, 11245000000, 14976000000, 13511000000, 16814000000];
+          const yearlyCashflowDates = ['2011-01-30', '2012-01-29', '2013-01-27', '2014-01-26', '2015-01-25', '2016-01-31', '2017-01-29', '2018-01-28', '2019-01-27', '2020-01-26', '2021-01-31', '2022-01-30', '2023-01-29', '2024-01-28'];
+          const quarterlyCashflowDates = ['2009-10-25', '2010-01-31', '2010-05-02', '2010-08-01', '2010-10-31', '2011-01-30', '2011-05-01', '2011-07-31', '2011-10-30', '2012-01-29', '2012-04-29', '2012-07-29', '2012-10-28', '2013-01-27', '2013-04-28', '2013-07-28', '2013-10-27', '2014-01-26', '2014-04-27', '2014-07-27', '2014-10-26', '2015-01-25', '2015-04-26', '2015-07-26', '2015-10-25', '2016-01-31', '2016-05-01', '2016-07-31', '2016-10-30', '2017-01-29', '2017-04-30', '2017-07-30', '2017-10-29', '2018-01-28', '2018-04-29', '2018-07-29', '2018-10-28', '2019-01-27', '2019-04-28', '2019-07-28', '2019-10-27', '2020-01-26', '2020-04-26', '2020-07-26', '2020-10-25', '2021-01-31', '2021-05-02', '2021-08-01', '2021-10-31', '2022-01-30', '2022-05-01', '2022-07-31', '2022-10-30', '2023-01-29', '2023-04-30', '2023-07-30', '2023-10-29', '2024-01-28', '2024-04-28', '2024-07-28', '2024-10-27'];
+
+          new Chart(ctxYearlyCashflow, {
+            type: 'line',
+            data: {
+              labels: yearlyCashflowDates,
+              datasets: [
+                {
+                    label: 'Cashflow',
+                    data: yearlyCashflowData,
+                    borderColor: 'blue',
+                    borderWidth: 2,
+                }
+              ],
+            },
+          });
+
+          new Chart(ctxQuarterlyCashflow, {
+            type: 'line',
+            data: {
+              labels: quarterlyCashflowDates,
+              datasets: [
+                {
+                    label: 'Cashflow',
+                    data: quarterlyCashflowData,
+                    borderColor: 'blue',
+                    borderWidth: 2,
+                }
+              ],
+            },
+          });
+
+          //profit margin 
+          const ctxYearlyProfitMargin = document.getElementById('stock-chart-profitmargin-yearly').getContext('2d');
+          const ctxQuarterlyProfitMargin = document.getElementById('stock-chart-profitmargin-quarterly').getContext('2d');
+          const yearlyProfitMarginData = [7.144, 14.535, 13.143, 10.654, 13.477, 12.255, 24.110, 31.367, 35.521, 25.609, 25.979, 36.234, 16.193, 48.849];
+          const quarterlyProfitMarginData = [-13.547, 6.879, -30.691, -30.311, -13.561, 11.911, 13.341, 13.734, -17.377, 10.056, 19.365, 14.055, 14.911, 16.721, 12.172, 6.535, 11.400, 17.364, 15.717, 8.158, 9.869, 11.265, 12.840, 12.421, 11.605, 14.122, 15.428, 11.642, 2.255, 18.927, 14.775, 15.939, 18.277, 27.046, 30.143, 26.174, 26.143, 31.791, 38.406, 38.790, 35.255, 38.667, 25.714, 17.748, 21.404, 29.827, 30.596, 29.773, 16.089, 28.269, 29.123, 33.775, 36.484, 34.690, 39.291, 19.522, 9.785, 11.465, 23.368, 28.407, 45.813, 51.010, 55.581, 57.138, 55.256, 55.040];
+          const yearlyProfitMarginDates = ['2011-01-30', '2012-01-29', '2013-01-27', '2014-01-26', '2015-01-25', '2016-01-31', '2017-01-29', '2018-01-28', '2019-01-27', '2020-01-26', '2021-01-31', '2022-01-30', '2023-01-29', '2024-01-28'];
+          const quarterlyProfitMarginDates = ['2008-07-27', '2008-10-26', '2009-01-25', '2009-04-26', '2009-07-26', '2009-10-25', '2010-01-31', '2010-05-02', '2010-08-01', '2010-10-31', '2011-01-30', '2011-05-01', '2011-07-31', '2011-10-30', '2012-01-29', '2012-04-29', '2012-07-29', '2012-10-28', '2013-01-27', '2013-04-28', '2013-07-28', '2013-10-27', '2014-01-26', '2014-04-27', '2014-07-27', '2014-10-26', '2015-01-25', '2015-04-26', '2015-07-26', '2015-10-25', '2016-01-31', '2016-05-01', '2016-07-31', '2016-10-30', '2017-01-29', '2017-04-30', '2017-07-30', '2017-10-29', '2018-01-28', '2018-04-29', '2018-07-29', '2018-10-28', '2019-01-27', '2019-04-28', '2019-07-28', '2019-10-27', '2020-01-26', '2020-04-26', '2020-07-26', '2020-10-25', '2021-01-31', '2021-05-02', '2021-08-01', '2021-10-31', '2022-01-30', '2022-05-01', '2022-07-31', '2022-10-30', '2023-01-29', '2023-04-30', '2023-07-30', '2023-10-29', '2024-01-28', '2024-04-28', '2024-07-28', '2024-10-27'];
+
+          new Chart(ctxYearlyProfitMargin, {
+            type: 'line',
+            data: {
+              labels: yearlyProfitMarginDates,
+              datasets: [
+                {
+                    label: 'ProfitMargin',
+                    data: yearlyProfitMarginData,
+                    borderColor: 'purple',
+                    borderWidth: 2,
+                }
+              ],
+            },
+          });
+
+          new Chart(ctxQuarterlyProfitMargin, {
+            type: 'line',
+            data: {
+              labels: quarterlyProfitMarginDates,
+              datasets: [
+                {
+                    label: 'ProfitMargin',
+                    data: quarterlyProfitMarginData,
+                    borderColor: 'purple',
+                    borderWidth: 2,
+                }
+              ],
+            },
+          });
+
+
+          //operating margin 
+          const ctxYearlyOperatingMargin = document.getElementById('stock-chart-operatingmargin-yearly').getContext('2d');
+          const ctxQuarterlyOperatingMargin = document.getElementById('stock-chart-operatingmargin-quarterly').getContext('2d');
+          const yearlyOperatingMarginData = [7.218, 16.216, 15.145, 12.010, 16.211, 14.910, 27.988, 33.045, 32.630, 26.067, 27.178, 37.308, 15.660, 54.122];
+          const quarterlyOperatingMarginData = [-17.407, 6.327, -36.389, -34.772, -14.180, 11.940, 13.668, 14.713, -21.598, 12.298, 20.282, 16.097, 17.120, 18.486, 12.832, 7.874, 13.370, 20.946, 16.584, 8.671, 10.799, 13.377, 14.569, 13.690, 14.778, 17.388, 18.465, 15.291, 6.592, 18.774, 17.987, 18.774, 22.199, 31.886, 33.732, 28.601, 30.852, 33.953, 36.860, 40.380, 37.048, 33.260, 13.333, 16.126, 22.140, 30.756, 31.884, 31.688, 16.839, 29.581, 30.122, 34.552, 37.560, 37.604, 38.859, 22.539, 7.443, 10.133, 20.757, 29.755, 50.344, 57.489, 61.593, 64.925, 62.057, 62.337];
+          const yearlyOperatingMarginDates = ['2011-01-30', '2012-01-29', '2013-01-27', '2014-01-26', '2015-01-25', '2016-01-31', '2017-01-29', '2018-01-28', '2019-01-27', '2020-01-26', '2021-01-31', '2022-01-30', '2023-01-29', '2024-01-28'];
+          const quarterlyOperatingMarginDates = ['2008-07-27', '2008-10-26', '2009-01-25', '2009-04-26', '2009-07-26', '2009-10-25', '2010-01-31', '2010-05-02', '2010-08-01', '2010-10-31', '2011-01-30', '2011-05-01', '2011-07-31', '2011-10-30', '2012-01-29', '2012-04-29', '2012-07-29', '2012-10-28', '2013-01-27', '2013-04-28', '2013-07-28', '2013-10-27', '2014-01-26', '2014-04-27', '2014-07-27', '2014-10-26', '2015-01-25', '2015-04-26', '2015-07-26', '2015-10-25', '2016-01-31', '2016-05-01', '2016-07-31', '2016-10-30', '2017-01-29', '2017-04-30', '2017-07-30', '2017-10-29', '2018-01-28', '2018-04-29', '2018-07-29', '2018-10-28', '2019-01-27', '2019-04-28', '2019-07-28', '2019-10-27', '2020-01-26', '2020-04-26', '2020-07-26', '2020-10-25', '2021-01-31', '2021-05-02', '2021-08-01', '2021-10-31', '2022-01-30', '2022-05-01', '2022-07-31', '2022-10-30', '2023-01-29', '2023-04-30', '2023-07-30', '2023-10-29', '2024-01-28', '2024-04-28', '2024-07-28', '2024-10-27'];
+
+          new Chart(ctxYearlyOperatingMargin, {
+            type: 'line',
+            data: {
+              labels: yearlyOperatingMarginDates,
+              datasets: [
+                {
+                    label: 'OperatingMargin',
+                    data: yearlyOperatingMarginData,
+                    borderColor: 'purple',
+                    borderWidth: 2,
+                }
+              ],
+            },
+          });
+
+          new Chart(ctxQuarterlyOperatingMargin, {
+            type: 'line',
+            data: {
+              labels: quarterlyOperatingMarginDates,
+              datasets: [
+                {
+                    label: 'OperatingMargin',
+                    data: quarterlyOperatingMarginData,
+                    borderColor: 'purple',
+                    borderWidth: 2,
+                }
+              ],
+            },
+          });
+
+
+          //debt 2 equity ratio 
+          const ctxYearlydebt2equity = document.getElementById('stock-chart-debt2equity-yearly').getContext('2d');
+          const ctxQuarterlydebt2equity = document.getElementById('stock-chart-debt2equity-quarterly').getContext('2d');
+          const yearlydebt2equityData = [0.399, 0.345, 0.413, 0.339, 0.328, 0.628, 0.630, 0.630, 0.703, 0.505, 0.423, 0.419, 0.704, 0.660, 0.863, 0.529];
+          const quarterlydebt2equityData = [0.468, 0.429, 0.345, 0.329, 0.352, 0.351, 0.413, 0.374, 0.318, 0.281, 0.339, 0.331, 0.323, 0.286, 0.328, 0.301, 0.335, 0.322, 0.628, 0.647, 0.611, 0.638, 0.630, 0.600, 0.668, 0.607, 0.630, 0.675, 0.649, 0.797, 0.703, 0.533, 0.574, 0.547, 0.505, 0.485, 0.465, 0.441, 0.423, 0.445, 0.429, 0.410, 0.419, 0.775, 0.810, 0.753, 0.704, 0.640, 0.828, 0.707, 0.660, 0.718, 0.823, 0.896, 0.863, 0.813, 0.802, 0.628, 0.529, 0.568, 0.465, 0.457];
+          const yearlydebt2equityDates = ['2009-01-25', '2010-01-31', '2011-01-30', '2012-01-29', '2013-01-27', '2014-01-26', '2015-01-25', '2016-01-31', '2017-01-29', '2018-01-28', '2019-01-27', '2020-01-26', '2021-01-31', '2022-01-30', '2023-01-29', '2024-01-28'];
+          const quarterlydebt2equityDates = ['2009-07-26', '2009-10-25', '2010-01-31', '2010-05-02', '2010-08-01', '2010-10-31', '2011-01-30', '2011-05-01', '2011-07-31', '2011-10-30', '2012-01-29', '2012-04-29', '2012-07-29', '2012-10-28', '2013-01-27', '2013-04-28', '2013-07-28', '2013-10-27', '2014-01-26', '2014-04-27', '2014-07-27', '2014-10-26', '2015-01-25', '2015-04-26', '2015-07-26', '2015-10-25', '2016-01-31', '2016-05-01', '2016-07-31', '2016-10-30', '2017-01-29', '2017-04-30', '2017-07-30', '2017-10-29', '2018-01-28', '2018-04-29', '2018-07-29', '2018-10-28', '2019-01-27', '2019-04-28', '2019-07-28', '2019-10-27', '2020-01-26', '2020-04-26', '2020-07-26', '2020-10-25', '2021-01-31', '2021-05-02', '2021-08-01', '2021-10-31', '2022-01-30', '2022-05-01', '2022-07-31', '2022-10-30', '2023-01-29', '2023-04-30', '2023-07-30', '2023-10-29', '2024-01-28', '2024-04-28', '2024-07-28', '2024-10-27'];
+
+          new Chart(ctxYearlydebt2equity, {
+            type: 'line',
+            data: {
+              labels: yearlydebt2equityDates,
+              datasets: [
+                {
+                    label: 'Debt2Equity',
+                    data: yearlydebt2equityData,
+                    borderColor: 'pink',
+                    borderWidth: 2,
+                }
+              ],
+            },
+          });
+
+          new Chart(ctxQuarterlydebt2equity, {
+            type: 'line',
+            data: {
+              labels: quarterlydebt2equityDates,
+              datasets: [
+                {
+                    label: 'Debt2Equity',
+                    data: quarterlydebt2equityData,
+                    borderColor: 'pink',
+                    borderWidth: 2,
+                }
+              ],
+            },
+          });
+        </script>
+    </body>
+</html>
