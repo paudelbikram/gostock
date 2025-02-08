@@ -24,7 +24,7 @@
                         <li class="list-group-item">FiscalYearEnd : {{.overview.FiscalYearEnd}}</li>
                         <li class="list-group-item">LatestQuarter : {{.overview.LatestQuarter}}</li>
                         <li class="list-group-item">Currency : {{.overview.Currency}}</li>
-                        <li class="list-group-item">MarketCapitalization : {{.overview.MarketCapitalization}}</li>
+                        <li class="list-group-item">MarketCapitalization : {{ formatNumber .overview.MarketCapitalization }}</li>
                         <li class="list-group-item">PERatio : {{.overview.PERatio}}</li>
                         <li class="list-group-item">PEGRatio : {{.overview.PEGRatio}}</li>
                         <li class="list-group-item">ProfitMargin : {{.overview.ProfitMargin}}</li>
@@ -38,7 +38,7 @@
                         <li class="list-group-item">revenuePerShare : {{.overview.revenuePerShare}}</li>
                         <li class="list-group-item">50DayMovingAverage : {{ index .overview "50DayMovingAverage" }}</li>
                         <li class="list-group-item">200DayMovingAverage : {{ index .overview "200DayMovingAverage" }}</li>
-                        <li class="list-group-item">SharesOutstanding : {{.overview.SharesOutstanding}}</li>
+                        <li class="list-group-item">SharesOutstanding : {{ formatNumber .overview.SharesOutstanding }}</li>
                     </ul>
                 </div>
                 <div class="col">
@@ -55,9 +55,9 @@
                         <li class="list-group-item">AnalystRatingStrongSell : {{.overview.AnalystRatingStrongSell}}</li>
                         <li class="list-group-item">EVToEBITDA : {{.overview.EVToEBITDA}}</li>
                         <li class="list-group-item">EPS : {{.overview.EPS}}</li>
-                        <li class="list-group-item">RevenueTTM : {{.overview.RevenueTTM}}</li>
-                        <li class="list-group-item">GrossProfitTTM : {{.overview.GrossProfitTTM}}</li>
-                        <li class="list-group-item">DilutedEPSTTM : {{.overview.DilutedEPSTTM}}</li>
+                        <li class="list-group-item">RevenueTTM : {{ formatNumber .overview.RevenueTTM }}</li>
+                        <li class="list-group-item">GrossProfitTTM : {{ formatNumber .overview.GrossProfitTTM }}</li>
+                        <li class="list-group-item">DilutedEPSTTM : {{ formatNumber .overview.DilutedEPSTTM }}</li>
                         <li class="list-group-item">TrailingPE : {{.overview.TrailingPE}}</li>
                         <li class="list-group-item">ForwardPE : {{.overview.ForwardPE}}</li>
                         <li class="list-group-item">PriceToBookRatio : {{.overview.PriceToBookRatio}}</li>
@@ -141,16 +141,16 @@
                     {{ range .balancesheet.annualReports }}
                     <tr>
                         <th scope="row">{{ .fiscalDateEnding }}</th>
-                        <td>{{ .totalAssets }}</td>
-                        <td>{{ .cashAndCashEquivalentsAtCarryingValue }}</td>
-                        <td>{{ .totalLiabilities }}</td>
-                        <td>{{ .totalShareholderEquity }}</td>
-                        <td>{{ .inventory }}</td>
-                        <td>{{ .deferredRevenue }}</td>
-                        <td>{{ .totalCurrentLiabilities }}</td>
-                        <td>{{ .longTermDebt }}</td>
-                        <td>{{ .retainedEarnings }}</td>
-                        <td>{{ .commonStockSharesOutstanding }}</td>
+                        <td>{{formatNumber .totalAssets }}</td>
+                        <td>{{formatNumber .cashAndCashEquivalentsAtCarryingValue }}</td>
+                        <td>{{formatNumber .totalLiabilities }}</td>
+                        <td>{{formatNumber .totalShareholderEquity }}</td>
+                        <td>{{formatNumber .inventory }}</td>
+                        <td>{{formatNumber .deferredRevenue }}</td>
+                        <td>{{formatNumber .totalCurrentLiabilities }}</td>
+                        <td>{{formatNumber .longTermDebt }}</td>
+                        <td>{{formatNumber .retainedEarnings }}</td>
+                        <td>{{formatNumber .commonStockSharesOutstanding }}</td>
                     </tr>
                     {{ end }}
                 </tbody>
@@ -179,16 +179,16 @@
                     {{ range .balancesheet.quarterlyReports }}
                     <tr>
                         <th scope="row">{{ .fiscalDateEnding }}</th>
-                        <td>{{ .totalAssets }}</td>
-                        <td>{{ .cashAndCashEquivalentsAtCarryingValue }}</td>
-                        <td>{{ .totalLiabilities }}</td>
-                        <td>{{ .totalShareholderEquity }}</td>
-                        <td>{{ .inventory }}</td>
-                        <td>{{ .deferredRevenue }}</td>
-                        <td>{{ .totalCurrentLiabilities }}</td>
-                        <td>{{ .longTermDebt }}</td>
-                        <td>{{ .retainedEarnings }}</td>
-                        <td>{{ .commonStockSharesOutstanding }}</td>
+                        <td>{{formatNumber .totalAssets }}</td>
+                        <td>{{formatNumber .cashAndCashEquivalentsAtCarryingValue }}</td>
+                        <td>{{formatNumber .totalLiabilities }}</td>
+                        <td>{{formatNumber .totalShareholderEquity }}</td>
+                        <td>{{formatNumber .inventory }}</td>
+                        <td>{{formatNumber .deferredRevenue }}</td>
+                        <td>{{formatNumber .totalCurrentLiabilities }}</td>
+                        <td>{{formatNumber .longTermDebt }}</td>
+                        <td>{{formatNumber .retainedEarnings }}</td>
+                        <td>{{formatNumber .commonStockSharesOutstanding }}</td>
                     </tr>
                     {{ end }}
                 </tbody>
@@ -213,12 +213,12 @@
                     {{ range .cashflow.annualReports }}
                     <tr>
                         <th scope="row">{{ .fiscalDateEnding }}</th>
-                        <td>{{ .operatingCashflow }}</td>
-                        <td>{{ .capitalExpenditures }}</td>
-                        <td>{{ .dividendPayout }}</td>
-                        <td>{{ .cashflowFromFinancing }}</td>
-                        <td>{{ .cashflowFromInvestment }}</td>
-                        <td>{{ .netIncome }}</td>
+                        <td>{{formatNumber .operatingCashflow }}</td>
+                        <td>{{formatNumber .capitalExpenditures }}</td>
+                        <td>{{formatNumber .dividendPayout }}</td>
+                        <td>{{formatNumber .cashflowFromFinancing }}</td>
+                        <td>{{formatNumber .cashflowFromInvestment }}</td>
+                        <td>{{formatNumber .netIncome }}</td>
                     </tr>
                     {{ end }}
                 </tbody>
@@ -243,12 +243,12 @@
                     {{ range .cashflow.quarterlyReports }}
                     <tr>
                         <th scope="row">{{ .fiscalDateEnding }}</th>
-                        <td>{{ .operatingCashflow }}</td>
-                        <td>{{ .capitalExpenditures }}</td>
-                        <td>{{ .dividendPayout }}</td>
-                        <td>{{ .cashflowFromFinancing }}</td>
-                        <td>{{ .cashflowFromInvestment }}</td>
-                        <td>{{ .netIncome }}</td>
+                        <td>{{formatNumber .operatingCashflow }}</td>
+                        <td>{{formatNumber .capitalExpenditures }}</td>
+                        <td>{{formatNumber .dividendPayout }}</td>
+                        <td>{{formatNumber .cashflowFromFinancing }}</td>
+                        <td>{{formatNumber .cashflowFromInvestment }}</td>
+                        <td>{{formatNumber .netIncome }}</td>
                     </tr>
                     {{ end }}
                 </tbody>
@@ -274,13 +274,13 @@
                     {{ range .income.annualReports }}
                     <tr>
                         <th scope="row">{{ .fiscalDateEnding }}</th>
-                        <td>{{ .totalRevenue }}</td>
-                        <td>{{ .grossProfit }}</td>
-                        <td>{{ .operatingIncome }}</td>
-                        <td>{{ .netIncome }}</td>
-                        <td>{{ .ebitda }}</td>
-                        <td>{{ .operatingExpenses }}</td>
-                        <td>{{ .incomeBeforeTax }}</td>
+                        <td>{{formatNumber .totalRevenue }}</td>
+                        <td>{{formatNumber .grossProfit }}</td>
+                        <td>{{formatNumber .operatingIncome }}</td>
+                        <td>{{formatNumber .netIncome }}</td>
+                        <td>{{formatNumber .ebitda }}</td>
+                        <td>{{formatNumber .operatingExpenses }}</td>
+                        <td>{{formatNumber .incomeBeforeTax }}</td>
                     </tr>
                     {{ end }}
                 </tbody>
@@ -305,13 +305,13 @@
                         {{ range .income.quarterlyReports }}
                         <tr>
                             <th scope="row">{{ .fiscalDateEnding }}</th>
-                            <td>{{ .totalRevenue }}</td>
-                            <td>{{ .grossProfit }}</td>
-                            <td>{{ .operatingIncome }}</td>
-                            <td>{{ .netIncome }}</td>
-                            <td>{{ .ebitda }}</td>
-                            <td>{{ .operatingExpenses }}</td>
-                            <td>{{ .incomeBeforeTax }}</td>
+                            <td>{{formatNumber .totalRevenue }}</td>
+                            <td>{{formatNumber .grossProfit }}</td>
+                            <td>{{formatNumber .operatingIncome }}</td>
+                            <td>{{formatNumber .netIncome }}</td>
+                            <td>{{formatNumber .ebitda }}</td>
+                            <td>{{formatNumber .operatingExpenses }}</td>
+                            <td>{{formatNumber .incomeBeforeTax }}</td>
                         </tr>
                         {{ end }}
                     </tbody>

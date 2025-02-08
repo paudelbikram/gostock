@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	"text/template"
+
+	"golang.org/x/text/message"
 )
 
 //go:embed data/template/template.html
@@ -28,6 +30,16 @@ func joinFloatArray(arr []float64, sep string) string {
 		strArr[i] = strconv.FormatFloat(num, 'f', 3, 64)
 	}
 	return "[" + strings.Join(strArr, sep) + "]"
+}
+
+func formatNumber(numStr string) string {
+	num, err := strconv.ParseInt(numStr, 10, 64)
+	if err != nil {
+		log.Println(err)
+		return ""
+	}
+	m := message.NewPrinter(message.MatchLanguage("en"))
+	return m.Sprintf("%d", num)
 }
 
 func joinStringArray(arr []string, sep string) string {
@@ -73,6 +85,7 @@ func createView(ticker string) {
 		"joinStringArray": joinStringArray,
 		"joinIntArray":    joinIntArray,
 		"joinFloatArray":  joinFloatArray,
+		"formatNumber":    formatNumber,
 	}
 	stockTemplate := template.New("template.html").Funcs(funcMap)
 	stockTemplate, templateErr := stockTemplate.ParseFS(templatesFS, "data/template/template.html")
