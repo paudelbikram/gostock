@@ -24,7 +24,7 @@ const StockChart = ({data, label}) => {
             <CartesianGrid />
             <XAxis dataKey="key" />
             <YAxis tickFormatter={formatSmartNumber} />
-            <Tooltip formatter={formatSmartMoney} />
+            <Tooltip formatter={formatSmartNumber} />
             <Line type="monotone" dataKey="value" stroke="#3f51b5" />
           </LineChart>
         </ResponsiveContainer>
