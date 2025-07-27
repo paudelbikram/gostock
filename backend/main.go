@@ -3,49 +3,45 @@ package main
 import (
 	"gostock/backend/core"
 	"gostock/backend/core/api"
-	"gostock/backend/core/util"
 	"log"
-	"text/template"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/template/html/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/utils/v2"
 )
 
 func main() {
-	engine := html.New("./core/template", ".html")
-	funcMap := template.FuncMap{
-		"formatNumber": util.FormatNumber,
-	}
-	engine.AddFuncMap(funcMap)
-	app := fiber.New(fiber.Config{
-		Views: engine,
-	})
 
-	// Define a route
-	app.Get("/", func(c *fiber.Ctx) error {
-		err := c.Render("index", make(map[string]string))
-		if err != nil {
-			log.Fatal(err.Error())
-			return c.Status(500).SendString("Server Error.")
-		}
-		return nil
-	})
+	app := fiber.New()
 
-	app.Get("/gostock/:ticker", func(c *fiber.Ctx) error {
-		log.Print("Let's analyze stock")
-		stockTicker := utils.CopyString(c.Params("ticker"))
+	// cors config
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://localhost:3000, http://127.0.0.1:3000",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
+
+	// Global or route-specific limiter
+	app.Use(limiter.New(limiter.Config{
+		Max:        20,        // Allow max 20 requests
+		Expiration: time.Hour, // Per an hour
+		KeyGenerator: func(c *fiber.Ctx) string {
+			return c.IP() // Rate limit by IP
+		},
+		LimitReached: func(c *fiber.Ctx) error {
+			return c.Status(fiber.StatusTooManyRequests).JSON(fiber.Map{
+				"error": "Rate limit exceeded. Try again later.",
+			})
+		},
+	}))
+
+	app.Get("/api/:symbol", func(c *fiber.Ctx) error {
+		stockTicker := utils.CopyString(c.Params("symbol"))
 		dataCollector := core.NewDataCollector(api.NewAlphaVantageApiProvider())
 		data := dataCollector.RequestData(stockTicker)
-		log.Print(data)
-
-		err := c.Render("stock", data)
-		if err != nil {
-			log.Fatal(err.Error())
-			return c.Status(500).SendString("Server Error.")
-		}
-		return nil
+		return c.JSON(data)
 	})
 
-	log.Fatal(app.Listen(":3000"))
+	log.Fatal(app.Listen(":8080"))
 }

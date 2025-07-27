@@ -1,16 +1,14 @@
-package util 
+package util
 
 import (
-	"strconv"
 	"log"
+	"strconv"
 )
 
 func GetDebt2EquityTrend(balancesheetJson map[string]interface{}) interface{} {
-	var yearlyDates []string
-	var yearlyDebt2EquityRatio []float64
+	var yearly []interface{}
 	for _, value := range balancesheetJson["annualReports"].([]interface{}) {
 		valueCasted := value.(map[string]interface{})
-		yearlyDates = append(yearlyDates, valueCasted["fiscalDateEnding"].(string))
 		totalEquity, equityErr := strconv.ParseInt(valueCasted["totalShareholderEquity"].(string), 10, 64)
 		totalLiabilities, liabilityErr := strconv.ParseInt(valueCasted["totalLiabilities"].(string), 10, 64)
 		if equityErr != nil {
@@ -21,13 +19,11 @@ func GetDebt2EquityTrend(balancesheetJson map[string]interface{}) interface{} {
 			log.Println(liabilityErr)
 			totalLiabilities = -1
 		}
-		yearlyDebt2EquityRatio = append(yearlyDebt2EquityRatio, CalculateRatio(float64(totalLiabilities), float64(totalEquity)))
+		yearly = append(yearly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": CalculateRatio(float64(totalLiabilities), float64(totalEquity))})
 	}
-	var quarterlyDates []string
-	var quarterlyDebt2EquityRatio []float64
+	var quarterly []interface{}
 	for _, value := range balancesheetJson["quarterlyReports"].([]interface{}) {
 		valueCasted := value.(map[string]interface{})
-		quarterlyDates = append(quarterlyDates, valueCasted["fiscalDateEnding"].(string))
 		totalEquity, equityErr := strconv.ParseInt(valueCasted["totalShareholderEquity"].(string), 10, 64)
 		totalLiabilities, liabilityErr := strconv.ParseInt(valueCasted["totalLiabilities"].(string), 10, 64)
 		if equityErr != nil {
@@ -38,31 +34,21 @@ func GetDebt2EquityTrend(balancesheetJson map[string]interface{}) interface{} {
 			log.Println(liabilityErr)
 			totalLiabilities = -1
 		}
-		quarterlyDebt2EquityRatio = append(quarterlyDebt2EquityRatio, CalculateRatio(float64(totalLiabilities), float64(totalEquity)))
+		quarterly = append(quarterly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": CalculateRatio(float64(totalLiabilities), float64(totalEquity))})
 	}
-	ReverseFloatArray(yearlyDebt2EquityRatio)
-	ReverseFloatArray(quarterlyDebt2EquityRatio)
-	ReverseStringArray(yearlyDates)
-	ReverseStringArray(quarterlyDates)
 	return struct {
-		YearlyDates               []string
-		QuarterlyDates            []string
-		YearlyDebt2EquityRatio    []float64
-		QuarterlyDebt2EquityRatio []float64
+		Yearly    []interface{}
+		Quarterly []interface{}
 	}{
-		YearlyDates:               yearlyDates,
-		QuarterlyDates:            quarterlyDates,
-		YearlyDebt2EquityRatio:    yearlyDebt2EquityRatio,
-		QuarterlyDebt2EquityRatio: quarterlyDebt2EquityRatio,
+		Yearly:    yearly,
+		Quarterly: quarterly,
 	}
 }
 
 func GetOperatingMarginTrend(incomeJson map[string]interface{}) interface{} {
-	var yearlyDates []string
-	var yearlyOperatingMargin []float64
+	var yearly []interface{}
 	for _, value := range incomeJson["annualReports"].([]interface{}) {
 		valueCasted := value.(map[string]interface{})
-		yearlyDates = append(yearlyDates, valueCasted["fiscalDateEnding"].(string))
 		totalReveneue, revErr := strconv.ParseInt(valueCasted["totalRevenue"].(string), 10, 64)
 		operatingIncome, opIncomeErr := strconv.ParseInt(valueCasted["operatingIncome"].(string), 10, 64)
 		if revErr != nil {
@@ -73,13 +59,11 @@ func GetOperatingMarginTrend(incomeJson map[string]interface{}) interface{} {
 			log.Println(opIncomeErr)
 			operatingIncome = -1
 		}
-		yearlyOperatingMargin = append(yearlyOperatingMargin, CalculateMargin(float64(operatingIncome), float64(totalReveneue)))
+		yearly = append(yearly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": CalculateMargin(float64(operatingIncome), float64(totalReveneue))})
 	}
-	var quarterlyDates []string
-	var quarterlyOperatingMargin []float64
+	var quarterly []interface{}
 	for _, value := range incomeJson["quarterlyReports"].([]interface{}) {
 		valueCasted := value.(map[string]interface{})
-		quarterlyDates = append(quarterlyDates, valueCasted["fiscalDateEnding"].(string))
 		totalReveneue, revErr := strconv.ParseInt(valueCasted["totalRevenue"].(string), 10, 64)
 		operatingIncome, opIncomeErr := strconv.ParseInt(valueCasted["operatingIncome"].(string), 10, 64)
 		if revErr != nil {
@@ -90,31 +74,21 @@ func GetOperatingMarginTrend(incomeJson map[string]interface{}) interface{} {
 			log.Println(opIncomeErr)
 			operatingIncome = -1
 		}
-		quarterlyOperatingMargin = append(quarterlyOperatingMargin, CalculateMargin(float64(operatingIncome), float64(totalReveneue)))
+		quarterly = append(quarterly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": CalculateMargin(float64(operatingIncome), float64(totalReveneue))})
 	}
-	ReverseFloatArray(yearlyOperatingMargin)
-	ReverseFloatArray(quarterlyOperatingMargin)
-	ReverseStringArray(yearlyDates)
-	ReverseStringArray(quarterlyDates)
 	return struct {
-		YearlyDates              []string
-		QuarterlyDates           []string
-		YearlyOperatingMargin    []float64
-		QuarterlyOperatingMargin []float64
+		Yearly    []interface{}
+		Quarterly []interface{}
 	}{
-		YearlyDates:              yearlyDates,
-		QuarterlyDates:           quarterlyDates,
-		YearlyOperatingMargin:    yearlyOperatingMargin,
-		QuarterlyOperatingMargin: quarterlyOperatingMargin,
+		Yearly:    yearly,
+		Quarterly: quarterly,
 	}
 }
 
 func GetProfitMarginTrend(incomeJson map[string]interface{}) interface{} {
-	var yearlyDates []string
-	var yearlyProfitMargin []float64
+	var yearly []interface{}
 	for _, value := range incomeJson["annualReports"].([]interface{}) {
 		valueCasted := value.(map[string]interface{})
-		yearlyDates = append(yearlyDates, valueCasted["fiscalDateEnding"].(string))
 		totalReveneue, revErr := strconv.ParseInt(valueCasted["totalRevenue"].(string), 10, 64)
 		netIncome, incomeErr := strconv.ParseInt(valueCasted["netIncome"].(string), 10, 64)
 		if revErr != nil {
@@ -125,13 +99,11 @@ func GetProfitMarginTrend(incomeJson map[string]interface{}) interface{} {
 			log.Println(incomeErr)
 			netIncome = -1
 		}
-		yearlyProfitMargin = append(yearlyProfitMargin, CalculateMargin(float64(netIncome), float64(totalReveneue)))
+		yearly = append(yearly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": CalculateMargin(float64(netIncome), float64(totalReveneue))})
 	}
-	var quarterlyDates []string
-	var quarterlyProfitMargin []float64
+	var quarterly []interface{}
 	for _, value := range incomeJson["quarterlyReports"].([]interface{}) {
 		valueCasted := value.(map[string]interface{})
-		quarterlyDates = append(quarterlyDates, valueCasted["fiscalDateEnding"].(string))
 		totalReveneue, revErr := strconv.ParseInt(valueCasted["totalRevenue"].(string), 10, 64)
 		netIncome, incomeErr := strconv.ParseInt(valueCasted["netIncome"].(string), 10, 64)
 		if revErr != nil {
@@ -142,32 +114,21 @@ func GetProfitMarginTrend(incomeJson map[string]interface{}) interface{} {
 			log.Println(incomeErr)
 			netIncome = -1
 		}
-		quarterlyProfitMargin = append(quarterlyProfitMargin, CalculateMargin(float64(netIncome), float64(totalReveneue)))
+		quarterly = append(quarterly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": CalculateMargin(float64(netIncome), float64(totalReveneue))})
 	}
-	ReverseFloatArray(yearlyProfitMargin)
-	ReverseFloatArray(quarterlyProfitMargin)
-	ReverseStringArray(yearlyDates)
-	ReverseStringArray(quarterlyDates)
 	return struct {
-		YearlyDates           []string
-		QuarterlyDates        []string
-		YearlyProfitMargin    []float64
-		QuarterlyProfitMargin []float64
+		Yearly    []interface{}
+		Quarterly []interface{}
 	}{
-		YearlyDates:           yearlyDates,
-		QuarterlyDates:        quarterlyDates,
-		YearlyProfitMargin:    yearlyProfitMargin,
-		QuarterlyProfitMargin: quarterlyProfitMargin,
+		Yearly:    yearly,
+		Quarterly: quarterly,
 	}
 }
 
-
 func GetCashflowTrend(incomeJson map[string]interface{}) interface{} {
-	var yearlyDates []string
-	var yearlyCashflow []int64
+	var yearly []interface{}
 	for _, value := range incomeJson["annualReports"].([]interface{}) {
 		valueCasted := value.(map[string]interface{})
-		yearlyDates = append(yearlyDates, valueCasted["fiscalDateEnding"].(string))
 		operatingCashflow, opErr := strconv.ParseInt(valueCasted["operatingCashflow"].(string), 10, 64)
 		capitalExpenditures, capErr := strconv.ParseInt(valueCasted["capitalExpenditures"].(string), 10, 64)
 		if opErr != nil {
@@ -178,13 +139,11 @@ func GetCashflowTrend(incomeJson map[string]interface{}) interface{} {
 			log.Println(capErr)
 			capitalExpenditures = -1
 		}
-		yearlyCashflow = append(yearlyCashflow, operatingCashflow-capitalExpenditures)
+		yearly = append(yearly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": operatingCashflow - capitalExpenditures})
 	}
-	var quarterlyDates []string
-	var quarterlyCashflow []int64
+	var quarterly []interface{}
 	for _, value := range incomeJson["quarterlyReports"].([]interface{}) {
 		valueCasted := value.(map[string]interface{})
-		quarterlyDates = append(quarterlyDates, valueCasted["fiscalDateEnding"].(string))
 		operatingCashflow, opErr := strconv.ParseInt(valueCasted["operatingCashflow"].(string), 10, 64)
 		capitalExpenditures, capErr := strconv.ParseInt(valueCasted["capitalExpenditures"].(string), 10, 64)
 		if opErr != nil {
@@ -195,63 +154,43 @@ func GetCashflowTrend(incomeJson map[string]interface{}) interface{} {
 			log.Println(capErr)
 			capitalExpenditures = -1
 		}
-		quarterlyCashflow = append(quarterlyCashflow, operatingCashflow-capitalExpenditures)
+		quarterly = append(quarterly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": operatingCashflow - capitalExpenditures})
 	}
-	ReverseIntArray(yearlyCashflow)
-	ReverseIntArray(quarterlyCashflow)
-	ReverseStringArray(yearlyDates)
-	ReverseStringArray(quarterlyDates)
 	return struct {
-		YearlyDates       []string
-		QuarterlyDates    []string
-		YearlyCashflow    []int64
-		QuarterlyCashflow []int64
+		Yearly    []interface{}
+		Quarterly []interface{}
 	}{
-		YearlyDates:       yearlyDates,
-		QuarterlyDates:    quarterlyDates,
-		YearlyCashflow:    yearlyCashflow,
-		QuarterlyCashflow: quarterlyCashflow,
+		Yearly:    yearly,
+		Quarterly: quarterly,
 	}
 }
 
 func GetRevenueTrend(incomeJson map[string]interface{}) interface{} {
-	var yearlyDates []string
-	var yearlyRevenue []int64
+	var yearly []interface{}
 	for _, value := range incomeJson["annualReports"].([]interface{}) {
 		valueCasted := value.(map[string]interface{})
-		yearlyDates = append(yearlyDates, valueCasted["fiscalDateEnding"].(string))
 		revenue, err := strconv.ParseInt(valueCasted["totalRevenue"].(string), 10, 64)
 		if err != nil {
 			log.Println(err)
 			revenue = -1
 		}
-		yearlyRevenue = append(yearlyRevenue, revenue)
+		yearly = append(yearly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": revenue})
 	}
-	var quarterlyDates []string
-	var quarterlyRevenue []int64
+	var quarterly []interface{}
 	for _, value := range incomeJson["quarterlyReports"].([]interface{}) {
 		valueCasted := value.(map[string]interface{})
-		quarterlyDates = append(quarterlyDates, valueCasted["fiscalDateEnding"].(string))
 		revenue, err := strconv.ParseInt(valueCasted["totalRevenue"].(string), 10, 64)
 		if err != nil {
 			log.Println(err)
 			revenue = -1
 		}
-		quarterlyRevenue = append(quarterlyRevenue, revenue)
+		quarterly = append(quarterly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": revenue})
 	}
-	ReverseIntArray(yearlyRevenue)
-	ReverseIntArray(quarterlyRevenue)
-	ReverseStringArray(yearlyDates)
-	ReverseStringArray(quarterlyDates)
 	return struct {
-		YearlyDates      []string
-		QuarterlyDates   []string
-		YearlyRevenue    []int64
-		QuarterlyRevenue []int64
+		Yearly    []interface{}
+		Quarterly []interface{}
 	}{
-		YearlyDates:      yearlyDates,
-		QuarterlyDates:   quarterlyDates,
-		YearlyRevenue:    yearlyRevenue,
-		QuarterlyRevenue: quarterlyRevenue,
+		Yearly:    yearly,
+		Quarterly: quarterly,
 	}
 }
