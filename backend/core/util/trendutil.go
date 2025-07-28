@@ -1,8 +1,10 @@
 package util
 
 import (
-	"log"
+	"gostock/backend/logger"
 	"strconv"
+
+	"go.uber.org/zap"
 )
 
 func GetDebt2EquityTrend(balancesheetJson map[string]interface{}) interface{} {
@@ -12,11 +14,15 @@ func GetDebt2EquityTrend(balancesheetJson map[string]interface{}) interface{} {
 		totalEquity, equityErr := strconv.ParseInt(valueCasted["totalShareholderEquity"].(string), 10, 64)
 		totalLiabilities, liabilityErr := strconv.ParseInt(valueCasted["totalLiabilities"].(string), 10, 64)
 		if equityErr != nil {
-			log.Println(equityErr)
+			logger.Log.Error("Error", 
+				zap.Error(equityErr),
+			)
 			totalEquity = -1
 		}
 		if liabilityErr != nil {
-			log.Println(liabilityErr)
+			logger.Log.Error("Error", 
+				zap.Error(liabilityErr),
+			)
 			totalLiabilities = -1
 		}
 		yearly = append(yearly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": CalculateRatio(float64(totalLiabilities), float64(totalEquity))})
@@ -27,11 +33,15 @@ func GetDebt2EquityTrend(balancesheetJson map[string]interface{}) interface{} {
 		totalEquity, equityErr := strconv.ParseInt(valueCasted["totalShareholderEquity"].(string), 10, 64)
 		totalLiabilities, liabilityErr := strconv.ParseInt(valueCasted["totalLiabilities"].(string), 10, 64)
 		if equityErr != nil {
-			log.Println(equityErr)
+			logger.Log.Error("Error", 
+				zap.Error(equityErr),
+			)
 			totalEquity = -1
 		}
 		if liabilityErr != nil {
-			log.Println(liabilityErr)
+			logger.Log.Error("Error", 
+				zap.Error(liabilityErr),
+			)
 			totalLiabilities = -1
 		}
 		quarterly = append(quarterly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": CalculateRatio(float64(totalLiabilities), float64(totalEquity))})
@@ -52,11 +62,15 @@ func GetOperatingMarginTrend(incomeJson map[string]interface{}) interface{} {
 		totalReveneue, revErr := strconv.ParseInt(valueCasted["totalRevenue"].(string), 10, 64)
 		operatingIncome, opIncomeErr := strconv.ParseInt(valueCasted["operatingIncome"].(string), 10, 64)
 		if revErr != nil {
-			log.Println(revErr)
+			logger.Log.Error("Error", 
+				zap.Error(revErr),
+			)
 			totalReveneue = -1
 		}
 		if opIncomeErr != nil {
-			log.Println(opIncomeErr)
+			logger.Log.Error("Error", 
+				zap.Error(opIncomeErr),
+			)
 			operatingIncome = -1
 		}
 		yearly = append(yearly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": CalculateMargin(float64(operatingIncome), float64(totalReveneue))})
@@ -67,11 +81,15 @@ func GetOperatingMarginTrend(incomeJson map[string]interface{}) interface{} {
 		totalReveneue, revErr := strconv.ParseInt(valueCasted["totalRevenue"].(string), 10, 64)
 		operatingIncome, opIncomeErr := strconv.ParseInt(valueCasted["operatingIncome"].(string), 10, 64)
 		if revErr != nil {
-			log.Println(revErr)
+			logger.Log.Error("Error", 
+				zap.Error(revErr),
+			)
 			totalReveneue = -1
 		}
 		if opIncomeErr != nil {
-			log.Println(opIncomeErr)
+			logger.Log.Error("Error", 
+				zap.Error(opIncomeErr),
+			)
 			operatingIncome = -1
 		}
 		quarterly = append(quarterly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": CalculateMargin(float64(operatingIncome), float64(totalReveneue))})
@@ -92,11 +110,15 @@ func GetProfitMarginTrend(incomeJson map[string]interface{}) interface{} {
 		totalReveneue, revErr := strconv.ParseInt(valueCasted["totalRevenue"].(string), 10, 64)
 		netIncome, incomeErr := strconv.ParseInt(valueCasted["netIncome"].(string), 10, 64)
 		if revErr != nil {
-			log.Println(revErr)
+			logger.Log.Error("Error", 
+				zap.Error(revErr),
+			)
 			totalReveneue = -1
 		}
 		if incomeErr != nil {
-			log.Println(incomeErr)
+			logger.Log.Error("Error", 
+				zap.Error(incomeErr),
+			)
 			netIncome = -1
 		}
 		yearly = append(yearly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": CalculateMargin(float64(netIncome), float64(totalReveneue))})
@@ -107,11 +129,15 @@ func GetProfitMarginTrend(incomeJson map[string]interface{}) interface{} {
 		totalReveneue, revErr := strconv.ParseInt(valueCasted["totalRevenue"].(string), 10, 64)
 		netIncome, incomeErr := strconv.ParseInt(valueCasted["netIncome"].(string), 10, 64)
 		if revErr != nil {
-			log.Println(revErr)
+			logger.Log.Error("Error", 
+				zap.Error(revErr),
+			)
 			totalReveneue = -1
 		}
 		if incomeErr != nil {
-			log.Println(incomeErr)
+			logger.Log.Error("Error", 
+				zap.Error(incomeErr),
+			)
 			netIncome = -1
 		}
 		quarterly = append(quarterly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": CalculateMargin(float64(netIncome), float64(totalReveneue))})
@@ -132,11 +158,15 @@ func GetCashflowTrend(incomeJson map[string]interface{}) interface{} {
 		operatingCashflow, opErr := strconv.ParseInt(valueCasted["operatingCashflow"].(string), 10, 64)
 		capitalExpenditures, capErr := strconv.ParseInt(valueCasted["capitalExpenditures"].(string), 10, 64)
 		if opErr != nil {
-			log.Println(opErr)
+			logger.Log.Error("Error", 
+				zap.Error(opErr),
+			)
 			operatingCashflow = -1
 		}
 		if capErr != nil {
-			log.Println(capErr)
+			logger.Log.Error("Error", 
+				zap.Error(capErr),
+			)
 			capitalExpenditures = -1
 		}
 		yearly = append(yearly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": operatingCashflow - capitalExpenditures})
@@ -147,11 +177,15 @@ func GetCashflowTrend(incomeJson map[string]interface{}) interface{} {
 		operatingCashflow, opErr := strconv.ParseInt(valueCasted["operatingCashflow"].(string), 10, 64)
 		capitalExpenditures, capErr := strconv.ParseInt(valueCasted["capitalExpenditures"].(string), 10, 64)
 		if opErr != nil {
-			log.Println(opErr)
+			logger.Log.Error("Error", 
+				zap.Error(opErr),
+			)
 			operatingCashflow = -1
 		}
 		if capErr != nil {
-			log.Println(capErr)
+			logger.Log.Error("Error", 
+				zap.Error(capErr),
+			)
 			capitalExpenditures = -1
 		}
 		quarterly = append(quarterly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": operatingCashflow - capitalExpenditures})
@@ -171,7 +205,9 @@ func GetRevenueTrend(incomeJson map[string]interface{}) interface{} {
 		valueCasted := value.(map[string]interface{})
 		revenue, err := strconv.ParseInt(valueCasted["totalRevenue"].(string), 10, 64)
 		if err != nil {
-			log.Println(err)
+			logger.Log.Error("Error", 
+				zap.Error(err),
+			)
 			revenue = -1
 		}
 		yearly = append(yearly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": revenue})
@@ -181,7 +217,9 @@ func GetRevenueTrend(incomeJson map[string]interface{}) interface{} {
 		valueCasted := value.(map[string]interface{})
 		revenue, err := strconv.ParseInt(valueCasted["totalRevenue"].(string), 10, 64)
 		if err != nil {
-			log.Println(err)
+			logger.Log.Error("Error", 
+				zap.Error(err),
+			)
 			revenue = -1
 		}
 		quarterly = append(quarterly, map[string]interface{}{"key": valueCasted["fiscalDateEnding"].(string), "value": revenue})

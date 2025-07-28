@@ -6,5 +6,5 @@ type ApiProvider interface {
 	GetBalanceSheetUrl(ticker string) string
 	GetEarningUrl(ticker string) string
 	GetCashflowUrl(ticker string) string
-	GetData(ticket string) map[string]interface{}
+	GetData(ticket string) (map[string]interface{}, error)
 }

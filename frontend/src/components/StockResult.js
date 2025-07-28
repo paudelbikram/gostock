@@ -51,7 +51,7 @@ const StockResult = () => {
   ];
 
   return (
-    <Container>
+    <Box>
         <OverviewCard overview={data.overview} />
 
         <StockChart data={[...data.revenueTrend.Yearly].reverse()} 
@@ -87,7 +87,7 @@ const StockResult = () => {
         
         <StockTable columns={incomeColumns} rows={data.income.annualReports} label={data.ticker + ' Yearly Income'}/>
         <StockTable columns={incomeColumns} rows={data.income.quarterlyReports} label={data.ticker + ' Quarterly Income'}/>
-    </Container>
+    </Box>
   );
 };
 

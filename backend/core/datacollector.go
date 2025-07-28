@@ -14,6 +14,6 @@ func NewDataCollector(apiProvider api.ApiProvider) *DataCollector {
 	}
 }
 
-func (d *DataCollector) RequestData(ticker string) map[string]interface{} {
+func (d *DataCollector) RequestData(ticker string) (map[string]interface{}, error) {
 	return d.apiProvider.GetData(ticker)
 }

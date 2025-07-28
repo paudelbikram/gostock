@@ -1,10 +1,12 @@
 package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"gostock/backend/core/util"
-	"encoding/json"
-	"log"
+	"gostock/backend/logger"
+
+	"go.uber.org/zap"
 )
 
 type AlphaVantageApiProvider struct {
@@ -54,62 +56,132 @@ func (a *AlphaVantageApiProvider) GetCashflowUrl(ticker string) string {
 	)
 }
 
-func (a *AlphaVantageApiProvider) GetData(ticker string) map[string]interface{} {
+func (a *AlphaVantageApiProvider) GetData(ticker string) (map[string]interface{}, error) {
 	//getting overview data
-	overviewData := util.GetCacheData(a.providerName, ticker, "overview")
+	overviewData, err := util.GetCacheData(a.providerName, ticker, "overview")
+	if err != nil {
+		logger.Log.Info("Cache not found",
+			zap.Error(err),
+		)
+	}
 	if overviewData == "" {
-		overviewData = util.SetCacheData(a.providerName, ticker, "overview",
+		overviewData, err = util.SetCacheData(a.providerName, ticker, "overview",
 			util.Get(a.GetOverviewUrl(ticker)))
+		if err != nil {
+			logger.Log.Info("Data retrieval failed",
+				zap.Error(err),
+			)
+			return nil, err
+		}
 	}
 	//getting incomestatement data
-	incomeData := util.GetCacheData(a.providerName, ticker, "incomestatement")
+	incomeData, err := util.GetCacheData(a.providerName, ticker, "incomestatement")
+	if err != nil {
+		logger.Log.Info("Cache not found",
+			zap.Error(err),
+		)
+	}
 	if incomeData == "" {
-		incomeData = util.SetCacheData(a.providerName, ticker, "incomestatement",
+		incomeData, err = util.SetCacheData(a.providerName, ticker, "incomestatement",
 			util.Get(a.GetIncomeStatementUrl(ticker)))
+		if err != nil {
+			logger.Log.Info("Data retrieval failed",
+				zap.Error(err),
+			)
+			return nil, err
+		}
 	}
 	//getting balancesheet data
-	balancesheetData := util.GetCacheData(a.providerName, ticker, "balancesheet")
+	balancesheetData, err := util.GetCacheData(a.providerName, ticker, "balancesheet")
+	if err != nil {
+		logger.Log.Info("Cache not found",
+			zap.Error(err),
+		)
+	}
 	if balancesheetData == "" {
-		balancesheetData = util.SetCacheData(a.providerName, ticker, "balancesheet",
+		balancesheetData, err = util.SetCacheData(a.providerName, ticker, "balancesheet",
 			util.Get(a.GetBalanceSheetUrl(ticker)))
+		if err != nil {
+			logger.Log.Info("Data retrieval failed",
+				zap.Error(err),
+			)
+			return nil, err
+		}
 	}
 	//getting earning data
-	earningData := util.GetCacheData(a.providerName, ticker, "earning")
+	earningData, err := util.GetCacheData(a.providerName, ticker, "earning")
+	if err != nil {
+		logger.Log.Info("Cache not found",
+			zap.Error(err),
+		)
+	}
 	if earningData == "" {
-		earningData = util.SetCacheData(a.providerName, ticker, "earning",
+		earningData, err = util.SetCacheData(a.providerName, ticker, "earning",
 			util.Get(a.GetEarningUrl(ticker)))
+		if err != nil {
+			logger.Log.Info("Data retrieval failed",
+				zap.Error(err),
+			)
+			return nil, err
+		}
 	}
 	//getting cashflow data
-	cashflowData := util.GetCacheData(a.providerName, ticker, "cashflow")
+	cashflowData, err := util.GetCacheData(a.providerName, ticker, "cashflow")
+	if err != nil {
+		logger.Log.Info("Cache not found",
+			zap.Error(err),
+		)
+	}
 	if cashflowData == "" {
-		cashflowData = util.SetCacheData(a.providerName, ticker, "cashflow",
+		cashflowData, err = util.SetCacheData(a.providerName, ticker, "cashflow",
 			util.Get(a.GetCashflowUrl(ticker)))
+		if err != nil {
+			logger.Log.Info("Data retrieval failed",
+				zap.Error(err),
+			)
+			return nil, err
+		}
 	}
 
 	var overviewJson map[string]interface{}
 	overeviewErr := json.Unmarshal([]byte(overviewData), &overviewJson)
 	if overeviewErr != nil {
-		log.Println(overeviewErr)
+		logger.Log.Info("Json unmarshal failed",
+			zap.Error(err),
+		)
+		return nil, overeviewErr
 	}
 	var cashflowJson map[string]interface{}
 	cashflowErr := json.Unmarshal([]byte(cashflowData), &cashflowJson)
 	if cashflowErr != nil {
-		log.Println(cashflowErr)
+		logger.Log.Info("Json unmarshal failed",
+			zap.Error(err),
+		)
+		return nil, cashflowErr
 	}
 	var balancesheetJson map[string]interface{}
 	balancesheetErr := json.Unmarshal([]byte(balancesheetData), &balancesheetJson)
 	if balancesheetErr != nil {
-		log.Println(balancesheetErr)
+		logger.Log.Info("Json unmarshal failed",
+			zap.Error(err),
+		)
+		return nil, balancesheetErr
 	}
 	var incomeJson map[string]interface{}
 	incomeErr := json.Unmarshal([]byte(incomeData), &incomeJson)
 	if incomeErr != nil {
-		log.Println(incomeErr)
+		logger.Log.Info("Json unmarshal failed",
+			zap.Error(err),
+		)
+		return nil, incomeErr
 	}
 	var earningJson map[string]interface{}
 	earningErr := json.Unmarshal([]byte(earningData), &earningJson)
 	if earningErr != nil {
-		log.Println(earningErr)
+		logger.Log.Info("Json unmarshal failed",
+			zap.Error(err),
+		)
+		return nil, earningErr
 	}
 
 	revenueTrend := util.GetRevenueTrend(incomeJson)
@@ -129,5 +201,5 @@ func (a *AlphaVantageApiProvider) GetData(ticker string) map[string]interface{} 
 		"profitMarginTrend":     profitMarginTrend,
 		"operatingMarginTrend":  operatingMarginTrend,
 		"debt2equityRatioTrend": debt2equityRatioTrend,
-	}
+	}, nil
 }

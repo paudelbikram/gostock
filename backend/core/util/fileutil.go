@@ -2,37 +2,52 @@ package util
 
 import (
 	"fmt"
-	"log"
+	"gostock/backend/logger"
 	"os"
+
+	"go.uber.org/zap"
 )
 
 func GetFileContent(filePath string) []byte {
 	data, err := os.ReadFile(filePath)
 	if err != nil {
-		log.Println(err)
+		logger.Log.Error("Error",
+			zap.Error(err),
+		)
 		return nil
 	}
 	return data
 }
 
-func GetCacheData(providerName string, ticker string, dataType string) string {
+func GetCacheData(providerName string, ticker string, dataType string) (string, error) {
 	filePath := fmt.Sprintf("./core/data/%s/cache/%s/%s.json", providerName, ticker, dataType)
 	data, err := os.ReadFile(filePath)
 	if err != nil {
-		return ""
+		logger.Log.Error("Error",
+			zap.Error(err),
+		)
+		return "", err
 	}
-	return string(data)
+	return string(data), nil
 }
 
-func SetCacheData(providerName string, ticker string, dataType string, data string) string {
+func SetCacheData(providerName string, ticker string, dataType string, data string) (string, error) {
 	filePath := fmt.Sprintf("./core/data/%s/cache/%s/%s.json", providerName, ticker, dataType)
-	os.MkdirAll(fmt.Sprintf("./core/data/%s/cache/%s", providerName, ticker), os.ModePerm)
-	err := os.WriteFile(filePath, []byte(data), 0644)
+	err := os.MkdirAll(fmt.Sprintf("./core/data/%s/cache/%s", providerName, ticker), os.ModePerm)
 	if err != nil {
-		log.Println(err)
-		return ""
+		logger.Log.Error("Error",
+			zap.Error(err),
+		)
+		return "", err
 	}
-	return data
+	err = os.WriteFile(filePath, []byte(data), 0644)
+	if err != nil {
+		logger.Log.Error("Error",
+			zap.Error(err),
+		)
+		return "", err
+	}
+	return data, nil
 }
 
 func GetApiKey(providerName string) string {
