@@ -4,6 +4,7 @@ import (
 	"gostock/backend/core"
 	"gostock/backend/core/api"
 	"gostock/backend/logger"
+	"strings"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -68,7 +69,7 @@ func main() {
 			})
 		}
 		dataCollector := core.NewDataCollector(api.NewAlphaVantageApiProvider())
-		data, err := dataCollector.RequestData(stockTicker)
+		data, err := dataCollector.RequestData(strings.ToUpper(stockTicker))
 		if err != nil {
 			logger.Log.Error("internal server error",
 				zap.Error(err),
