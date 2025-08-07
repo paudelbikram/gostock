@@ -8,7 +8,6 @@ import (
 
 var Log *zap.Logger
 
-
 func Init() {
 	writer := zapcore.AddSync(&lumberjack.Logger{
 		Filename:   "./logs/app.log",
@@ -23,7 +22,7 @@ func Init() {
 		writer,
 		zap.InfoLevel,
 	)
-	Log = zap.New(core)
+	Log = zap.New(core).WithOptions(zap.AddStacktrace(zap.ErrorLevel))
 }
 
 func Sync() {

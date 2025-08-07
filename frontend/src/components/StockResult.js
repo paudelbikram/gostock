@@ -4,7 +4,6 @@ import {
   Box,
   Typography,
   CircularProgress,
-  Container,
 } from '@mui/material';
 import OverviewCard from './OverviewCard';
 import StockChart from './StockChart';

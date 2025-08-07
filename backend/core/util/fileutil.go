@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gostock/backend/logger"
 	"os"
+	"path/filepath"
 
 	"go.uber.org/zap"
 )
@@ -53,4 +54,28 @@ func SetCacheData(providerName string, ticker string, dataType string, data stri
 func GetApiKey(providerName string) string {
 	keyPath := fmt.Sprintf("./core/data/%s/api.key", providerName)
 	return string(GetFileContent(keyPath))
+}
+
+func GetCacheStock() ([]string, error) {
+	matches, err := filepath.Glob("./core/data/*/cache/*")
+	if err != nil {
+		logger.Log.Error("Error reading folder with regex",
+			zap.Error(err),
+		)
+		return nil, err
+	}
+	var folderNames []string
+	for _, path := range matches {
+		info, err := os.Stat(path)
+		if err != nil {
+			logger.Log.Error("Error reading folder match",
+				zap.Error(err),
+			)
+			continue // skip invalid paths
+		}
+		if info.IsDir() {
+			folderNames = append(folderNames, filepath.Base(path))
+		}
+	}
+	return folderNames, nil
 }

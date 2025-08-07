@@ -3,13 +3,12 @@ package main
 import (
 	"gostock/backend/core"
 	"gostock/backend/core/api"
+	"gostock/backend/core/util"
 	"gostock/backend/logger"
 	"strings"
-	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/utils/v2"
 	"go.uber.org/zap"
@@ -23,8 +22,21 @@ func main() {
 	app := fiber.New()
 
 	// Add recovery middleware to catch panics
-	// Let's log these
-	app.Use(recover.New())
+	// Use recover with custom handler
+	app.Use(recover.New(recover.Config{
+		EnableStackTrace: true,
+		// Custom error handler
+		StackTraceHandler: func(c *fiber.Ctx, err interface{}) {
+			logger.Log.Error("Panic recovered",
+				zap.String("path", c.OriginalURL()),
+				zap.Any("Error", err),
+			)
+			// Send JSON response with 500
+			err = c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"error": "Internal Server Error. Please try again later.",
+			})
+		},
+	}))
 
 	// cors config
 	app.Use(cors.New(cors.Config{
@@ -33,21 +45,23 @@ func main() {
 	}))
 
 	// Global or route-specific limiter
-	app.Use(limiter.New(limiter.Config{
-		Max:        20,               // Allow max 20 requests
-		Expiration: 10 * time.Minute, // Per 10 minutes
-		KeyGenerator: func(c *fiber.Ctx) string {
-			return c.IP() // Rate limit by IP
-		},
-		LimitReached: func(c *fiber.Ctx) error {
-			logger.Log.Error("Rate limit exceeded.",
-				zap.String("ip", c.IP()),
-			)
-			return c.Status(fiber.StatusTooManyRequests).JSON(fiber.Map{
-				"error": "Rate limit exceeded. Try again later.",
-			})
-		},
-	}))
+	/*
+		app.Use(limiter.New(limiter.Config{
+			Max:        20,               // Allow max 20 requests
+			Expiration: 10 * time.Minute, // Per 10 minutes
+			KeyGenerator: func(c *fiber.Ctx) string {
+				return c.IP() // Rate limit by IP
+			},
+			LimitReached: func(c *fiber.Ctx) error {
+				logger.Log.Error("Rate limit exceeded.",
+					zap.String("ip", c.IP()),
+				)
+				return c.Status(fiber.StatusTooManyRequests).JSON(fiber.Map{
+					"error": "Rate limit exceeded. Try again later.",
+				})
+			},
+		}))
+	*/
 
 	// Middleware to log requests
 	app.Use(func(c *fiber.Ctx) error {
@@ -59,7 +73,16 @@ func main() {
 		return c.Next()
 	})
 
+	app.Get("/api/stock/list", func(c *fiber.Ctx) error {
+		list, err := util.GetCacheStock()
+		if err != nil {
+			return c.JSON([]string{})
+		}
+		return c.JSON(list)
+	})
+
 	app.Get("/api/:symbol", func(c *fiber.Ctx) error {
+
 		stockTicker := utils.CopyString(c.Params("symbol"))
 		if stockTicker == "" {
 			// Return HTTP 400 with error JSON
