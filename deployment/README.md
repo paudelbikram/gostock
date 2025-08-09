@@ -1,22 +1,23 @@
-1. Ensure backend works on port 8080 or it is configurable. 
-2. Build release ready backend binary 
-    >>> go build -o gostock-backend main.go
-3. Build front end
-    >>> npm run build // This builds build folder 
-4. SSH into your server and update 
+1. SSH into your server and update 
     >>> ssh root@server
     >>> apt update && apt upgrade -y
-5. Install dependencies 
+2. Install dependencies 
     >>> apt install nginx -y 
     >>> apt install nodejs npm -y 
     >>> apt install golang -y 
+3. Build frontend.
+    For local
+    >>> REACT_APP_API_BASE=http://localhost:8080 npm start
+    For prod
+    >>> REACT_APP_API_BASE=/ npm run build
+4. Build backend 
+    >>> cd /opt/app/backend
+    >>> GOOS=linux GOARCH=amd64 go build -o gostock main.go
 6. Upload your app 
     >>> scp -r ./backend root@server:/opt/app/backend
     >>> scp -r ./frontend/build root@server:/opt/app/frontend
-7. Run the go backend 
-    >>> cd /opt/app/backend
-    >>> go build -o gostock-backend
-    >>> ./gostock-backend &
+7. Run backend
+    >>> ./gostock &
     Use & to run in background
     Or use tmux or systemd for persistence
 
@@ -53,11 +54,3 @@ server {
     (Optional) Use Let's Encrypt for HTTPS with Certbot:
     >>> apt install certbot python3-certbot-nginx -y
     >>> certbot --nginx
-
-10. 
-# For local dev
-REACT_APP_API_BASE=http://localhost:8080 npm start
-
-# For production build
-REACT_APP_API_BASE=/ npm run build
-
