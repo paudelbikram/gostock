@@ -1,19 +1,39 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const API_BASE = process.env.REACT_APP_API_BASE || "";
+
 export const fetchStockData = createAsyncThunk(
   'stock/fetchData',
-  async (symbol) => {
-    const response = await axios.get(`http://192.168.1.70:8080/api/${symbol}`);
-    return response.data;
+  async (symbol, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`${API_BASE}/api/${symbol}`);
+      return data;
+    } catch (err) {
+      if (err.response?.data) {
+        return rejectWithValue(
+          err.response.data.error || err.response.data.message || "Internal Server Error"
+        );
+      }
+      return rejectWithValue(err.message || "Network error");
+    }
   }
 );
 
 export const fetchStockList = createAsyncThunk(
   'stock/fetchList',
-  async () => {
-    const response = await axios.get('http://192.168.1.70:8080/api/stock/list');
-    return response.data;
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`${API_BASE}/api/stock/list`);
+      return data;
+    } catch (err) {
+      if (err.response?.data) {
+        return rejectWithValue(
+          err.response.data.error || err.response.data.message || "Internal Server Error"
+        );
+      }
+      return rejectWithValue(err.message || "Network error");
+    }
   }
 );
 
@@ -38,7 +58,7 @@ const stockSlice = createSlice({
       })
       .addCase(fetchStockData.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       })
       .addCase(fetchStockList.fulfilled, (state, action) => {
         state.listLoading = false;

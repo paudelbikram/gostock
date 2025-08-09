@@ -53,3 +53,11 @@ server {
     (Optional) Use Let's Encrypt for HTTPS with Certbot:
     >>> apt install certbot python3-certbot-nginx -y
     >>> certbot --nginx
+
+10. 
+# For local dev
+REACT_APP_API_BASE=http://localhost:8080 npm start
+
+# For production build
+REACT_APP_API_BASE=/ npm run build
+

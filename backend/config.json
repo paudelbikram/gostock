@@ -1,0 +1,4 @@
+{
+    "port": 8080,
+    "cors_origin": "https://gostock.techpasya.com,http://localhost:3000,http://127.0.0.1:3000,http://192.168.1.70:3000"
+  }

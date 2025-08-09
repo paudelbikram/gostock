@@ -1,14 +1,18 @@
 package main
 
 import (
+	"fmt"
+	"gostock/backend/config"
 	"gostock/backend/core"
 	"gostock/backend/core/api"
 	"gostock/backend/core/util"
 	"gostock/backend/logger"
 	"strings"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/utils/v2"
 	"go.uber.org/zap"
@@ -18,6 +22,12 @@ func main() {
 	// Setting up logger
 	logger.Init()
 	defer logger.Sync()
+
+	// Loading config
+	config, err := config.NewConfig()
+	if err != nil {
+		return // exit if failed to load config
+	}
 
 	app := fiber.New()
 
@@ -33,35 +43,33 @@ func main() {
 			)
 			// Send JSON response with 500
 			err = c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-				"error": "Internal Server Error. Please try again later.",
+				"message": "Internal server error. Please try again later.",
 			})
 		},
 	}))
 
 	// cors config
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:3000, http://127.0.0.1:3000, http://192.168.1.70:3000",
+		AllowOrigins: config.CORSOrigin,
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
 	// Global or route-specific limiter
-	/*
-		app.Use(limiter.New(limiter.Config{
-			Max:        20,               // Allow max 20 requests
-			Expiration: 10 * time.Minute, // Per 10 minutes
-			KeyGenerator: func(c *fiber.Ctx) string {
-				return c.IP() // Rate limit by IP
-			},
-			LimitReached: func(c *fiber.Ctx) error {
-				logger.Log.Error("Rate limit exceeded.",
-					zap.String("ip", c.IP()),
-				)
-				return c.Status(fiber.StatusTooManyRequests).JSON(fiber.Map{
-					"error": "Rate limit exceeded. Try again later.",
-				})
-			},
-		}))
-	*/
+	app.Use(limiter.New(limiter.Config{
+		Max:        15,              // Allow max 15 requests
+		Expiration: 1 * time.Minute, // Per 1 minutes
+		KeyGenerator: func(c *fiber.Ctx) string {
+			return c.IP() // Rate limit by IP
+		},
+		LimitReached: func(c *fiber.Ctx) error {
+			logger.Log.Error("Rate limit exceeded.",
+				zap.String("ip", c.IP()),
+			)
+			return c.Status(fiber.StatusTooManyRequests).JSON(fiber.Map{
+				"message": "Rate limit exceeded. Try again later.",
+			})
+		},
+	}))
 
 	// Middleware to log requests
 	app.Use(func(c *fiber.Ctx) error {
@@ -88,7 +96,7 @@ func main() {
 			// Return HTTP 400 with error JSON
 			logger.Log.Error("No Ticker Symbol provide")
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"error": "stock symbol is required",
+				"message": "Stock symbol is required.",
 			})
 		}
 		dataCollector := core.NewDataCollector(api.NewAlphaVantageApiProvider())
@@ -98,11 +106,11 @@ func main() {
 				zap.Error(err),
 			)
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-				"error": "internal server error occurred",
+				"message": "Internal server error occurred. Please try again later.",
 			})
 		}
 		return c.JSON(data)
 	})
 
-	logger.Log.Fatal("Backend starting...", zap.Error(app.Listen(":8080")))
+	logger.Log.Fatal("Backend starting...", zap.Error(app.Listen(":"+fmt.Sprint(config.Port))))
 }
