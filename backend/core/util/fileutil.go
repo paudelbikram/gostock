@@ -1,10 +1,12 @@
 package util
 
 import (
+	"errors"
 	"fmt"
 	"gostock/backend/logger"
 	"os"
 	"path/filepath"
+	"time"
 
 	"go.uber.org/zap"
 )
@@ -22,6 +24,20 @@ func GetFileContent(filePath string) []byte {
 
 func GetCacheData(providerName string, ticker string, dataType string) (string, error) {
 	filePath := fmt.Sprintf("./core/data/%s/cache/%s/%s.json", providerName, ticker, dataType)
+	fileInfo, statErr := os.Stat(filePath)
+	if statErr != nil {
+		logger.Log.Error("Error",
+			zap.Error(statErr),
+		)
+		return "", statErr
+	}
+	// if file is older than a month, let's recreate a new one 
+	oneMonthAgo := time.Now().AddDate(0, -1, 0)
+	if fileInfo.ModTime().Before(oneMonthAgo) {
+		os.Remove(filePath)
+		return "", errors.New("old data found; recreating cache")
+	}
+	
 	data, err := os.ReadFile(filePath)
 	if err != nil {
 		logger.Log.Error("Error",
