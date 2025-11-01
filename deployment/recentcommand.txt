@@ -1,0 +1,41 @@
+sudo nano /etc/systemd/system/gostock.service
+  431  sudo systemctl daemon-reload
+  432  sudo systemctl start gostock
+  433  sudo systemctl enable gostock
+  434  journalctl -u gostock -f
+  435  sudo nano /etc/systemd/system/gostock.service
+  436  sudo systemctl daemon-reload
+  437  sudo systemctl start gostock
+  438  journalctl -u gostock -f
+  439  ps aux|grep gostock
+  440  cd /etc/systemd/
+  441  ll
+  442  cd system
+  443  ll
+  444  cat gostock.service 
+  445  cd /opt/app/backend/
+  446  ll
+  447  dir
+  448  cd logs/
+  449  ll
+  450  cat app.log 
+  451  ll
+  452  rm -r app.log 
+  453  ll
+  454  cd ..
+  455  ll
+  456  rm gostock 
+  457  ll
+  458  cd core/data/alpha-vantage/cache/
+  459  ll
+  460  cd -
+  461  cd ../frontend/
+  462  ll
+  463  rm -r build/
+  464  cd ../backend/logs/
+  465  ll
+  466  nano app.log
+  467  ll
+  468  cat app.log 
+  469  systemctl stop gostock.service 
+  470  systemctl start gostock.service 
