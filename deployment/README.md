@@ -9,7 +9,7 @@
     For local
     >>> REACT_APP_API_BASE=http://localhost:8080 npm start
     For prod
-    >>> REACT_APP_API_BASE=/ npm run build
+    >>> REACT_APP_API_BASE=https://gostock.techpasya.com npm run build
 4. Build backend 
     >>> cd /opt/app/backend
     >>> GOOS=linux GOARCH=amd64 go build -o gostock main.go
