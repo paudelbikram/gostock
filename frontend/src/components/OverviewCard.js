@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Box, Typography, Grid, Paper, Divider, Link, Container
+  Box, Typography, Grid, Paper, Divider, Link
 } from '@mui/material';
 
 const fields = [
@@ -24,7 +24,7 @@ const formatNumber = (val) => {
 
 const OverviewCard = ({overview}) => {
   return (
-    <Box sx={{ flexGrow: 1 }} mb={5}>
+    <Box sx={{ flexGrow: 1 }} mb={7}>
         <Grid item xs={12}>
           <Typography variant="h5" gutterBottom>{overview.Name} Overview</Typography>
         </Grid>

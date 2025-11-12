@@ -1,6 +1,6 @@
 import React from 'react';
 import StockSearch from './components/StockSearch';
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, Box } from '@mui/material';
 import StockResult from './components/StockResult';
 import Logo from './logo.svg';
 
@@ -12,6 +12,11 @@ function App() {
       </Typography>
       <StockSearch />
       <StockResult />
+      <Box sx={{ display: 'flex', justifyContent: 'center', m: 2 }}>
+        <Typography variant="body2" color="text.secondary">
+          © 2025 TechPasya — For informational purposes only. Not financial advice.
+        </Typography>
+      </Box>
     </Container>
   );
 }

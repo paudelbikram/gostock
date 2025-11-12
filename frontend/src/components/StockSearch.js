@@ -43,7 +43,7 @@ const StockSearch = () => {
         Go
       </Button>
     </Box>
-    <Typography color="text.secondary" mb={2} textAlign="center">
+    <Typography color="text.secondary" mb={1} textAlign="center">
       Explore key financial data about companies in a clear and easy-to-understand format. Try typing a stock symbol like <b>AAPL</b>, <b>MSFT</b>, or <b>NVDA</b>.
     </Typography>
     </Box>
