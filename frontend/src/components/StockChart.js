@@ -19,7 +19,7 @@ const StockChart = ({data, label}) => {
     if (index === 0) return { ...item, change: 0 };
     const prev = arr[index - 1].value;
     const diff = item.value - prev;
-    const pct = (diff / prev) * 100;
+    const pct = (diff / Math.abs(prev)) * 100;
     return { ...item, change: pct };
   });
   return (
