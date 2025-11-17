@@ -92,7 +92,7 @@ const calculateStockHealth = (years, data) => {
     { name: `${years}-Year ROIC`, 
       value: (ROIC*100)?.toFixed(2) + '%', 
       description: `Return on invested capital over ${years} years.
-                     ROIC over 0.1 considers a value creator. `, 
+                     ROIC over 10 considers a value creator. `, 
       check: ROIC > 0.1 
     },
     { name: 'Shares Outstanding Trend', 

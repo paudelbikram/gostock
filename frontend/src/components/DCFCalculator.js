@@ -20,13 +20,16 @@ const DCFCalculator = () => {
   const { data } = useSelector((state) => state.stock);
   const { cashflow, overview } = data;
   const annualReportsCashflow = cashflow.annualReports;
-  const initialFCF = Number(annualReportsCashflow[0]?.operatingCashflow || 0) - Math.abs(Number(annualReportsCashflow[0]?.capitalExpenditures || 0));;
+  const freeCashflow = Number(annualReportsCashflow[0]?.operatingCashflow || 0) - Math.abs(Number(annualReportsCashflow[0]?.capitalExpenditures || 0));;
+  const lastFcf = Number(annualReportsCashflow[1]?.operatingCashflow || 0) - Math.abs(Number(annualReportsCashflow[1]?.capitalExpenditures || 0));;
+  const fcfGrowthRate = (freeCashflow - lastFcf)/ lastFcf;
   const sharesOutstanding = overview.SharesOutstanding;
-  const terminalGrowth = 3;
-  const discountRate = 10;
   const [inputs, setInputs] = useState({
-    growthRate: 10,
+    initialFCF: freeCashflow,
+    growthRate: (fcfGrowthRate * 100).toFixed(2),
     years: 10,
+    terminalGrowthRate : 3,
+    discountRate: 10,
   });
 
 
@@ -36,21 +39,24 @@ const DCFCalculator = () => {
   });
 
   const handleSubmit = () => {
+    let fcf = parseFloat(inputs.initialFCF) || 0;
     const growthRate = parseFloat(inputs.growthRate) || 0;
     const years = parseInt(inputs.years) || 0;
+    const discountRate = parseFloat(inputs.discountRate) || 0;
+    const terminalGrowth = parseFloat(inputs.terminalGrowthRate) || 0;
     const g = growthRate / 100;
     const r = discountRate / 100;
     const tg = terminalGrowth / 100;
 
     let totalPV = 0;
-    let fcf = initialFCF;
-
+    
     for (let i = 1; i <= years; i++) {
       fcf *= 1 + g; // project FCF
       totalPV += fcf / Math.pow(1 + r, i);
     }
-
-    const terminalValue = (fcf * (1 + tg)) / (r - tg);
+    //terminal FCF cannot be negative
+    const terminalFCF = Math.max(fcf, 0);
+    const terminalValue = (terminalFCF * (1 + tg)) / (r - tg);
     totalPV += terminalValue / Math.pow(1 + r, years);
 
     const fairValuePerShare = sharesOutstanding
@@ -71,13 +77,21 @@ const DCFCalculator = () => {
           Stock Price Calculator
         </Typography>
         <Box display="flex" flexDirection="column" gap={2}>
+        <TextField
+            label="Initial Free Cash Flow"
+            name="initialFCF"
+            value={inputs.initialFCF}
+            onChange={handleChange}
+            type="number"
+            helperText={`${overview.Symbol} generated ${formatSmartNumber(freeCashflow)} ${overview.Currency} in fcf last year.`}
+          />
           <TextField
-            label="Growth Rate (%)"
+            label="Free Cash Flow Growth Rate (%)"
             name="growthRate"
             value={inputs.growthRate}
             onChange={handleChange}
             type="number"
-            helperText="Expected annual FCF growth, e.g. 10 for 10%"
+            helperText={`${overview.Symbol}'s fcf grew by ${(fcfGrowthRate * 100).toFixed(2)} last year.`}
           />
           <FormControl fullWidth variant="outlined">
             <InputLabel id="projection-years-label">Projection Years</InputLabel>
@@ -96,7 +110,26 @@ const DCFCalculator = () => {
             </Select>
             <FormHelperText>Select number of years for cash flow projection</FormHelperText>
           </FormControl>
-          <FormHelperText>Assumes 10% discount rate, 3% terminal growth, initial FCF of {formatSmartNumber(initialFCF)} {overview.Currency}, and {formatSmartNumber(sharesOutstanding.toLocaleString())} shares outstanding.</FormHelperText>
+
+          <TextField
+            label="Discount Rate (%)"
+            name="discountRate"
+            value={inputs.discountRate}
+            onChange={handleChange}
+            type="number"
+            helperText="10% is historical average for market return."
+          />
+
+          <TextField
+            label="Terminal Growth Rate (%)"
+            name="terminalGrowth"
+            value={inputs.terminalGrowthRate}
+            onChange={handleChange}
+            type="number"
+            helperText="3% is historical average for inflation."
+          />
+
+          <FormHelperText>{overview.Symbol} has {formatSmartNumber(sharesOutstanding.toLocaleString())} shares outstanding currently.</FormHelperText>
           <Button variant="contained" color="primary" onClick={handleSubmit} >
             Calculate
           </Button>
