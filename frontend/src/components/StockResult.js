@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import {
   Box,
@@ -10,6 +9,7 @@ import StockChart from './StockChart';
 import StockTable from './StockTable';
 import StockHealth from './StockHealth';
 import DYOR from './DYOR';
+import AdSenseAd from './AdSenseAd';
 import DCFCalculator from './DCFCalculator';
 
 const determineYears = (data) => {
@@ -179,44 +179,55 @@ const StockResult = () => {
     <Box>
         <DYOR />
         <OverviewCard overview={data.overview} />
+        <AdSenseAd adSlot="4993556350" adTest={false} />
         {years.map(year =>
         <StockHealth healthData={calculateStockHealth(year, data)} years={year} />
         )}
+        <AdSenseAd adSlot="4993556350" adTest={false} />
         <DYOR />
         <DCFCalculator />
+        <AdSenseAd adSlot="4993556350" adTest={false} />
         <StockChart data={[...data.revenueTrend.Yearly].reverse()} 
         label={data.ticker + ' Yearly Revenue'}/>
         <StockChart data={[...data.revenueTrend.Quarterly].reverse()} 
         label={data.ticker + ' Quarterly Revenue'}/>
+        <AdSenseAd adSlot="4993556350" adTest={false} />
         <DYOR />
         <StockChart data={[...data.cashflowTrend.Yearly].reverse()} 
         label={data.ticker + ' Yearly Cashflow'}/>
         <StockChart data={[...data.cashflowTrend.Quarterly].reverse()} 
         label={data.ticker + ' Quarterly Cashflow'}/>
+        <AdSenseAd adSlot="4993556350" adTest={false} />
         <DYOR />
         <StockChart data={[...data.profitMarginTrend.Yearly].reverse()} 
         label={data.ticker + ' Yearly Profit Margin'}/>
         <StockChart data={[...data.profitMarginTrend.Quarterly].reverse()} 
         label={data.ticker + ' Quarterly Profit Margin'}/>
+        <AdSenseAd adSlot="4993556350" adTest={false} />
         <DYOR />
         <StockChart data={[...data.operatingMarginTrend.Yearly].reverse()} 
         label={data.ticker + ' Yearly Operating Margin'}/>
         <StockChart data={[...data.operatingMarginTrend.Quarterly].reverse()} 
         label={data.ticker + ' Quarterly Operating Margin'}/>
+        <AdSenseAd adSlot="4993556350" adTest={false} />
         <DYOR />
         <StockChart data={[...data.debt2equityRatioTrend.Yearly].reverse()} 
         label={data.ticker + ' Yearly Debt To Equity Ratio'}/>
         <StockChart data={[...data.debt2equityRatioTrend.Quarterly].reverse()} 
         label={data.ticker + ' Quarterly Debt To Equity Ratio'}/>
+        <AdSenseAd adSlot="4993556350" adTest={false} />
         <DYOR />
         <StockTable columns={balanceSheetColumns} rows={data.balancesheet.annualReports} label={data.ticker + ' Yearly Balancesheet'}/>
         <StockTable columns={balanceSheetColumns} rows={data.balancesheet.quarterlyReports} label={data.ticker + ' Quarterly Balancesheet'}/>
+        <AdSenseAd adSlot="5018333432" adTest={false} />
         <DYOR />
         <StockTable columns={cashflowColumns} rows={data.cashflow.annualReports} label={data.ticker + ' Yearly Cashflow'}/>
         <StockTable columns={cashflowColumns} rows={data.cashflow.quarterlyReports} label={data.ticker + ' Quarterly Cashflow'}/>
+        <AdSenseAd adSlot="5018333432" adTest={false} />
         <DYOR />
         <StockTable columns={incomeColumns} rows={data.income.annualReports} label={data.ticker + ' Yearly Income'}/>
         <StockTable columns={incomeColumns} rows={data.income.quarterlyReports} label={data.ticker + ' Quarterly Income'}/>
+        <AdSenseAd adSlot="5018333432" adTest={false} />
     </Box>
   );
 };

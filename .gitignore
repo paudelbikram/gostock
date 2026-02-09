@@ -23,3 +23,12 @@ go.work.sum
 
 # env file
 .env
+
+# cache data 
+backend/core/data/alpha-vantage/cache/*
+
+# log file 
+backend/logs/*
+
+# servicejson file 
+backend/serviceAccount.json

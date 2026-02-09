@@ -5,9 +5,19 @@ const API_BASE = process.env.REACT_APP_API_BASE || "";
 
 export const fetchStockData = createAsyncThunk(
   'stock/fetchData',
-  async (symbol, { rejectWithValue }) => {
+  async (symbol, { getState, rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${API_BASE}/api/${symbol}`);
+      const state = getState();
+      const token = state.auth?.user?.token; 
+      if (!token) {
+        return rejectWithValue("No authentication token found");
+      }  
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.post(`${API_BASE}/api/${symbol}`, {}, config);
       return data;
     } catch (err) {
       if (err.response?.data) {
@@ -22,9 +32,19 @@ export const fetchStockData = createAsyncThunk(
 
 export const fetchStockList = createAsyncThunk(
   'stock/fetchList',
-  async (_, { rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${API_BASE}/api/stock/list`);
+      const state = getState();
+      const token = state.auth?.user?.token; 
+      if (!token) {
+        return rejectWithValue("No authentication token found");
+      } 
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.post(`${API_BASE}/api/stock/list`, {}, config);
       return data;
     } catch (err) {
       if (err.response?.data) {

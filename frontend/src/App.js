@@ -1,23 +1,30 @@
-import React from 'react';
-import StockSearch from './components/StockSearch';
-import { Container, Typography, Box } from '@mui/material';
-import StockResult from './components/StockResult';
-import Logo from './logo.svg';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from './components/Home';
+import Login from './components/Login';
+import RequireAuth from "./auth/RequireAuth"
+import PublicRoute from "./auth/PublicRoute";
+
 
 function App() {
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom align="center">
-        <img src={Logo} alt="GoStock" width={120} />
-      </Typography>
-      <StockSearch />
-      <StockResult />
-      <Box sx={{ display: 'flex', justifyContent: 'center', m: 2 }}>
-        <Typography variant="body2" color="text.secondary">
-          © 2025 TechPasya — For informational purposes only. Not financial advice.
-        </Typography>
-      </Box>
-    </Container>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" 
+          element={
+            <PublicRoute>
+              <Login />
+              </PublicRoute>} 
+        />
+        <Route
+          path="/*"
+          element={
+            <RequireAuth>
+              <Home />
+            </RequireAuth>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

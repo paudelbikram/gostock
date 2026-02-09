@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"gostock/backend/auth"
 	"gostock/backend/config"
 	"gostock/backend/core"
 	"gostock/backend/core/api"
@@ -29,6 +31,9 @@ func main() {
 		return // exit if failed to load config
 	}
 
+	// Initializing firebase
+	auth.InitFirebase()
+
 	app := fiber.New()
 
 	// Add recovery middleware to catch panics
@@ -51,7 +56,9 @@ func main() {
 	// cors config
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: config.CORSOrigin,
-		AllowHeaders: "Origin, Content-Type, Accept",
+		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
+		AllowMethods: "GET,POST,PUT,DELETE,OPTIONS",
+		AllowCredentials: true,
 	}))
 
 	// Global or route-specific limiter
@@ -66,7 +73,7 @@ func main() {
 				zap.String("ip", c.IP()),
 			)
 			return c.Status(fiber.StatusTooManyRequests).JSON(fiber.Map{
-				"message": "Rate limit exceeded. Try again later.",
+				"message": "Rate limit exceeded. Please slow down.",
 			})
 		},
 	}))
@@ -81,7 +88,28 @@ func main() {
 		return c.Next()
 	})
 
-	app.Get("/api/stock/list", func(c *fiber.Ctx) error {
+	app.Post("/auth/login", func(c *fiber.Ctx) error {
+		authHeader := c.Get("Authorization")
+		tokenStr := strings.TrimPrefix(authHeader, "Bearer ")
+
+		client, _ := auth.FirebaseApp.Auth(context.Background())
+		token, err := client.VerifyIDToken(context.Background(), tokenStr)
+		if err != nil {
+			return c.Status(401).JSON(fiber.Map{"error": "invalid token"})
+		}
+		email := token.Claims["email"].(string)
+		name := token.Claims["name"]
+		jwt, _ := auth.CreateJWT(email)
+		return c.JSON(fiber.Map{
+			"user": fiber.Map{
+				"email": email,
+				"name":  name,
+				"token": jwt,
+			},
+		})
+	})
+
+	app.Post("/api/stock/list", auth.AuthMiddleware, func(c *fiber.Ctx) error {
 		list, err := util.GetCacheStock()
 		if err != nil {
 			return c.JSON([]string{})
@@ -89,8 +117,7 @@ func main() {
 		return c.JSON(list)
 	})
 
-	app.Get("/api/:symbol", func(c *fiber.Ctx) error {
-
+	app.Post("/api/:symbol", auth.AuthMiddleware, func(c *fiber.Ctx) error {
 		stockTicker := utils.CopyString(c.Params("symbol"))
 		if stockTicker == "" {
 			// Return HTTP 400 with error JSON
