@@ -25,7 +25,7 @@ export default function Login() {
   }
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 10 }}>
+    <Container maxWidth="lg">
       <Header />
       <Card sx={{ p: 4 }}>
         <Stack spacing={2} mt={3}>

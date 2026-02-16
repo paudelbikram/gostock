@@ -34,6 +34,7 @@ func main() {
 	// Initializing firebase
 	auth.InitFirebase()
 
+	// Initializing fiber app
 	app := fiber.New()
 
 	// Add recovery middleware to catch panics
@@ -88,6 +89,7 @@ func main() {
 		return c.Next()
 	})
 
+	// Token based login handler
 	app.Post("/auth/login", func(c *fiber.Ctx) error {
 		authHeader := c.Get("Authorization")
 		tokenStr := strings.TrimPrefix(authHeader, "Bearer ")
@@ -95,6 +97,7 @@ func main() {
 		client, _ := auth.FirebaseApp.Auth(context.Background())
 		token, err := client.VerifyIDToken(context.Background(), tokenStr)
 		if err != nil {
+			logger.Log.Error("Failed to validate token", zap.Error(err),)
 			return c.Status(401).JSON(fiber.Map{"error": "invalid token"})
 		}
 		email := token.Claims["email"].(string)
@@ -112,6 +115,7 @@ func main() {
 	app.Post("/api/stock/list", auth.AuthMiddleware, func(c *fiber.Ctx) error {
 		list, err := util.GetCacheStock()
 		if err != nil {
+			logger.Log.Error("Failed to get stock list", zap.Error(err),)
 			return c.JSON([]string{})
 		}
 		return c.JSON(list)
@@ -139,5 +143,5 @@ func main() {
 		return c.JSON(data)
 	})
 
-	logger.Log.Fatal("Backend starting...", zap.Error(app.Listen(":"+fmt.Sprint(config.Port))))
+	logger.Log.Fatal("Backend started", zap.Error(app.Listen(":"+fmt.Sprint(config.Port))))
 }

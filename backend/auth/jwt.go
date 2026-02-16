@@ -8,6 +8,7 @@ import (
 
 var JWTSecret = []byte("!!!🔐GOSTOCK_SECRET_KEY🔑!!!")
 
+// Create JWT token using email and secret which will be valid for 24 hours
 func CreateJWT(email string) (string, error) {
 	claims := jwt.MapClaims{
 		"email": email,

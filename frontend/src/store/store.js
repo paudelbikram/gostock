@@ -11,10 +11,23 @@ const persistConfig = {
   whitelist: ['auth'], // Only auth will be persisted
 };
 
-const rootReducer = combineReducers({
+// 1. Define the combined reducer first
+const appReducer = combineReducers({
   auth: authReducer,
   stock: stockReducer,
 });
+
+// 2. Create the root reducer that handles the reset
+const rootReducer = (state, action) => {
+  if (action.type === 'auth/logout/fulfilled') {
+    // This clears the state memory
+    state = undefined;
+    // Optional: Manually clear local storage if you want to be 100% sure
+    localStorage.removeItem('persist:root'); 
+  }  
+  return appReducer(state, action);
+};
+
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
